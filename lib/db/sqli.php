@@ -198,10 +198,11 @@ class sqli
         $limitStr = $this->limit($page, $limit);
         $fieldStr = $this->field($field);
         try {
-            $countSql = 'SELECT COUNT(1) FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
+            $countSql = 'SELECT COUNT(1) AS countNum FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
             $result = $this->link->query($countSql);
-            $res = $result->fetch_row;
-            $count = $res[0];
+            $res = $result->fetch_array(MYSQLI_ASSOC);
+            var_dump($res);
+            $count = $res['countNum'];
             $result->close();
             $rows = [];
             if ($count > 0) {
