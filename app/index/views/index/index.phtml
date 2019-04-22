@@ -229,8 +229,9 @@
         $("#search-friends-button").click(function () {
             var searchStr = $("#user-search-str").val();
             var search_status = false;
+
             search_status = search_user(searchStr,1);
-            console.log(search_status);
+            console.log(search_user(searchStr,1));
             if(search_status == false){
                 return false;
             }else{
