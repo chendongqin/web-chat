@@ -24,7 +24,7 @@ class login extends base
         }
 //        $token = token::set('user_login', $user['id'], 600);
         $session = new session();
-        $session::set('login_user',$user['id']);
+        $session::set('login_user', $user['id']);
         return $this->success('成功', ['user_id' => $user['id']]);
     }
 
@@ -58,6 +58,14 @@ class login extends base
         if ($res === false) {
             return $this->error('注册失败');
         }
+        return $this->success('成功');
+    }
+
+
+    public function out()
+    {
+        $session = new session();
+        $session::del('login_user');
         return $this->success('成功');
     }
 }
