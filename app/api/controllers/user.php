@@ -63,7 +63,7 @@ class  user extends userApi
     {
         $searchStr = $this->helper->getParam('searchStr','','string');
         $page = $this->helper->getParam('page',1,'int');
-        $pageLimit = $this->helper->getParam('pagelimit',1,'int');
+        $pageLimit = $this->helper->getParam('pagelimit',4,'int');
         if(empty($searchStr)){
             return $this->error('查询条件不能为空');
         }
