@@ -73,7 +73,7 @@ class  user extends userApi
         $count = 0;
         $users = $db->select('user',$where,'`id` DESC',$page,$pageLimit,$count,['id','user_name','name']);
         $data = [
-            'total'=>$count,'pages'=>$this->getPages($count,$pageLimit),'users'=>$users
+            'total'=>$count,'pages'=>$this->getPages($count,$pageLimit),'users'=>$users,'page'=>$page
         ];
         return $this->success('成功',$data);
     }
