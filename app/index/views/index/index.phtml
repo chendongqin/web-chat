@@ -248,13 +248,13 @@
                     "                            </div>");
                 status = false;
             }else {
-                $("#search-user-total").html(returnJson.data.total);
+                $("#search-user-total").val(returnJson.data.total);
                 if(returnJson.data.pages > 1){
                     $("#search-user-total").attr("style","display:block;");
-                    $("#search-user-page").html(returnJson.data.page);
+                    $("#search-user-page").val(returnJson.data.page);
                     if(returnJson.data.pages >1){
                         $("#search-user-page").attr("style","display:block;");
-                        $("#search-user-page").html(returnJson.data.page);
+                        $("#search-user-page").val(returnJson.data.page);
                     }else{
                         $("#search-user-page").attr("style","display:none;");
                     }
