@@ -61,8 +61,8 @@
                         <h3>好友列表</h3>
                         <ul class="nav side-menu">
                             <?php foreach ($groups as $value):?>
-                                <li><a><i class="fa fa-user " data-id=<?php echo $value['id']?>></i> <?php echo $value['name'];?> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu group_<?php echo $value['id']?>">
+                                <li><a><i class="fa fa-user group-list" data-id=<?php echo $value['id']?>></i> <?php echo $value['name'];?> <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu group-<?php echo $value['id']?>">
 
                                     </ul>
                                 </li>
@@ -83,7 +83,7 @@
                     <a data-toggle="tooltip" data-placement="top" title="设置" href="javascript:;">
                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="添加好友" href="javascript:;">
+                    <a data-toggle="tooltip" class="add-friends" data-placement="top" title="添加好友" href="javascript:;">
                         <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
                     </a>
                     <a data-toggle="tooltip" data-placement="top" title="修改密码" href="javascript:;">
@@ -112,7 +112,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">添加好友</a></li>
+                                <li class="add-friends"><a href="javascript:;" >添加好友</a></li>
                                 <li><a href="javascript:;">修改密码</a></li>
                                 <li>
                                     <a href="javascript:;">
@@ -174,6 +174,8 @@
         <!-- /footer content -->
     </div>
 </div>
+<?php //include PUBLIC_PATH.'static/windows/user/search.phtml'?>
+<?php include '/static/windows/user/search.phtml'?>
 
 <!-- jQuery -->
 <script src="/static/vendors/jquery/dist/jquery.min.js"></script>
@@ -218,3 +220,9 @@
 
 </body>
 </html>
+
+<script>
+    $(".add-friends").click(){
+
+    }
+</script>
