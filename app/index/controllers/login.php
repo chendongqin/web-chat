@@ -11,6 +11,7 @@ class login extends base
         if($userId){
             $this->jump('/');
         }
+        return $this->display();
     }
 
     public function register(){
@@ -18,5 +19,6 @@ class login extends base
        if($userId){
            $this->jump('/');
        }
+        return $this->display();
     }
 }

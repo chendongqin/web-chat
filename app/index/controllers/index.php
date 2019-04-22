@@ -16,6 +16,7 @@ class index extends userBase
         $groups = $db->select('group', ['user_id' => $user['id']], 'id asc');
         array_unshift($groups, $first);
         $this->assign('groups', $groups);
+        return $this->display();
     }
 
     public function addfrieds(){

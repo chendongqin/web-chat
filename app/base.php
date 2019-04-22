@@ -128,6 +128,7 @@ class base
     }
 
     protected function assign($key ,$value){
+        $key = (string)$key;
         $this->viewData[$key] = $value;
         return $this;
     }
@@ -139,6 +140,9 @@ class base
 
     protected function display($html = '', $data = [])
     {
+        if (!$this->viewShow) {
+            return false;
+        }
         $data = array_merge($data,$this->viewData);
         extract($data);
         unset($data);
@@ -155,9 +159,7 @@ class base
 
     public function __destruct()
     {
-        if ($this->viewShow) {
-            $this->display();
-        }
+
     }
 
 //    public function getParam($key, $default = '', $filter = 'trim')
