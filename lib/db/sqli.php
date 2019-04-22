@@ -303,6 +303,7 @@ class sqli
         $fieldStr = $this->field($field);
         try {
             $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table .'`'. $whereStr . ' ' . $byOrder . ' LIMIT 1;';
+            var_dump($sql);
             $result = $this->link->query($sql);
             $row = $result->fetch_array(MYSQLI_ASSOC);
             $result->close();
