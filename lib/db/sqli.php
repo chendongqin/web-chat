@@ -200,6 +200,7 @@ class sqli
         try {
             $countSql = 'SELECT COUNT(1) FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
             $result = $this->link->query($countSql);
+            var_dump($result);
             $count = $result->num_rows;
             $result->close();
             $rows = [];
