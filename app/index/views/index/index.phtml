@@ -248,7 +248,9 @@
                     "                            </div>");
                 status = false;
             }else {
+                console.log(returnJson.data.total);
                 $("#search-user-total").val(returnJson.data.total);
+                $("#search-user-total").val(returnJson.data);
                 if(returnJson.data.pages > 1){
                     $("#search-user-total").attr("style","display:block;");
                     $("#search-user-page").val(returnJson.data.page);
