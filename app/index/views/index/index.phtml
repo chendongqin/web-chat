@@ -228,8 +228,7 @@
         });
         $("#search-friends-button").click(function () {
             var searchStr = $("#user-search-str").val();
-            var status = false;
-            status = search_user(searchStr,1);
+            var status = search_user(searchStr,1);
             if(status == false){
                 return false;
             }
@@ -238,6 +237,7 @@
         });
         function search_user(searchStr,page=1) {
             $("#search-user-result").empty();
+            $("#search-user-error").empty();
             $.post('/api/user/search',{searchStr:searchStr,page:page},function (returnJson) {
                 if(returnJson.status == false){
                     $("#search-user-error").html(" <label for=\"house_name\" class=\"col-sm-2 control-label\" >查询错误：</label>\n" +
