@@ -51,5 +51,5 @@ class userApi extends base
     protected function getLoginUser(){
         return $this->user;
     }
-    
+
 }
