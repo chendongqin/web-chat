@@ -236,7 +236,7 @@
         });
         $("#search-user-down").click(function () {
             var searchStr = $("#user-search-str").val();
-            var page = $this.attr('data-page').val();
+            var page = $("#search-user-down").attr('data-page').val();
             var search_status = search_user(searchStr,page);
             if(search_status == true){
                 $('#modal-search-friends-result').modal('show');
@@ -244,7 +244,7 @@
         });
         $("#search-user-up").click(function () {
             var searchStr = $("#user-search-str").val();
-            var page = $this.attr('data-page').val();
+            var page = $("#search-user-up").attr('data-page').val();
             var search_status = search_user(searchStr,page);
             if(search_status == true){
                 $('#modal-search-friends-result').modal('show');
