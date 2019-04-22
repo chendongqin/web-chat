@@ -237,18 +237,13 @@
         $("#search-user-down").click(function () {
             var searchStr = $("#user-search-str").val();
             var page = $(this).attr('data-page');
-            var search_status = search_user(searchStr,page);
-            if(search_status == true){
-                $('#modal-search-friends-result').modal('show');
-            }
+            search_user(searchStr,page);
+
         });
         $("#search-user-up").click(function () {
             var searchStr = $("#user-search-str").val();
             var page = $(this).attr('data-page');
-            var search_status = search_user(searchStr,page);
-            if(search_status == true){
-                $('#modal-search-friends-result').modal('show');
-            }
+            search_user(searchStr,page);
         });
     })();
     function search_user(searchStr,page=1) {
