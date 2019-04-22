@@ -229,10 +229,7 @@
         $("#search-friends-button").click(function () {
             var searchStr = $("#user-search-str").val();
             var search_status = search_user(searchStr,1);
-            return false;
-            if(search_status == false){
-                return false;
-            }else{
+            if(search_status == true){
                 $('#modal-search-friends').modal('hide');
                 $('#modal-search-friends-result').modal('show');
             }
@@ -247,43 +244,44 @@
                         "                            </div>" +
                         "</label>");
                     return false;
-                }
-                $("#search-user-total").html(returnJson.data.total);
-                if(returnJson.data.pages > 1){
-                    $("#search-user-total").attr("style","display:block;");
-                    $("#search-user-page").html(returnJson.data.page);
-                    if(returnJson.data.pages >1){
-                        $("#search-user-page").attr("style","display:block;");
+                }else {
+                    $("#search-user-total").html(returnJson.data.total);
+                    if(returnJson.data.pages > 1){
+                        $("#search-user-total").attr("style","display:block;");
                         $("#search-user-page").html(returnJson.data.page);
+                        if(returnJson.data.pages >1){
+                            $("#search-user-page").attr("style","display:block;");
+                            $("#search-user-page").html(returnJson.data.page);
+                        }else{
+                            $("#search-user-page").attr("style","display:none;");
+                        }
+                        if(returnJson.data.pages - returnJson.data.page > 0){
+                            $("#search-user-down").attr("style","display:block;");
+                            $("#search-user-down").attr("data-page",returnJson.data.page*1 + 1);
+                        }else{
+                            $("#search-user-down").attr("style","display:none;");
+                        }
+                        if(returnJson.data.page  > 1){
+                            $("#search-user-up").attr("style","display:block;");
+                            $("#search-user-up").attr("data-page",returnJson.data.page*1 - 1);
+                        }else{
+                            $("#search-user-up").attr("style","display:none;");
+                        }
                     }else{
-                        $("#search-user-page").attr("style","display:none;");
+                        $("#search-user-total").attr("style","display:none;");
                     }
-                    if(returnJson.data.pages - returnJson.data.page > 0){
-                        $("#search-user-down").attr("style","display:block;");
-                        $("#search-user-down").attr("data-page",returnJson.data.page*1 + 1);
-                    }else{
-                        $("#search-user-down").attr("style","display:none;");
-                    }
-                    if(returnJson.data.page  > 1){
-                        $("#search-user-up").attr("style","display:block;");
-                        $("#search-user-up").attr("data-page",returnJson.data.page*1 - 1);
-                    }else{
-                        $("#search-user-up").attr("style","display:none;");
-                    }
-                }else{
-                    $("#search-user-total").attr("style","display:none;");
+                    var str = '';
+                    $.each(returnJson.data.users,function(index,value){
+                        str += "<label class=\"col-sm-2 control-label\">"+ value.id +"</label>\n" +
+                            "<label class=\"col-sm-2 control-label\">"+ value.user_name +"</label>\n" +
+                            "<label class=\"col-sm-2 control-label\">"+ value.name +"</label>\n" +
+                            "<div class=\"col-sm-4\">\n" +
+                            "    <button type=\"button\" class=\"btn btn-default pull-right add-user-friends-button\" data-user_id=\""+ value.id +"\"  data-dismiss=\"modal\"></button>\n" +
+                            "</div>";
+                    });
+                    $("#search-user-result").html(str);
+                    return true;
                 }
-                var str = '';
-                $.each(returnJson.data.users,function(index,value){
-                    str += "<label class=\"col-sm-2 control-label\">"+ value.id +"</label>\n" +
-                        "<label class=\"col-sm-2 control-label\">"+ value.user_name +"</label>\n" +
-                        "<label class=\"col-sm-2 control-label\">"+ value.name +"</label>\n" +
-                        "<div class=\"col-sm-4\">\n" +
-                        "    <button type=\"button\" class=\"btn btn-default pull-right add-user-friends-button\" data-user_id=\""+ value.id +"\"  data-dismiss=\"modal\"></button>\n" +
-                        "</div>";
-                });
-                $("#search-user-result").html(str);
-                return true;
             });
         }
     })();
