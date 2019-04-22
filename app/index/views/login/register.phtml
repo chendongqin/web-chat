@@ -1,27 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <head>
-        <style>
-            * {
-                margin: 0px;
-                padding: 0px;
-            }
-        </style>
-    </head>
+    <title>聊天室</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="/static/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/static/build/css/custom.min.css" rel="stylesheet">
+    <script  type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
 
     <body>
-        <form name="user_register" id="user_register" action="">
-            <label>账号：<input name="user_name" value="" type="text"><br/></label>
-            <label>密码：<input name="password" value="" type="password"><br/></label>
-            <label>确认密码：<input name="sure" value="" type="password"><br/></label>
-            <label>昵称：<input name="name" value="" type="text"><br/></label>
-            <label><input value="登录" type="button" id="register_submit"></label>
-        </form>
+    <div id="register" class="animate form registration_form">
+        <section class="login_content">
+            <form name="user_register" id="user_register" action="">
+                <h1>注册</h1>
+                <div>
+                    <input type="text" class="form-control" name="user_name"  placeholder="用户名" required="" />
+                </div>
+                <div>
+                    <input type="password" class="form-control" name="password"  placeholder="密码" required="" />
+                </div>
+                <div>
+                    <input type="password" class="form-control" name="sure" placeholder="确认密码" required="" />
+                </div>
+                <div>
+                    <a class="btn btn-default submit" id="register_submit" href=":javascropt">注册</a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="separator">
+                    <p class="change_link">已有账号 ?
+                        <a href="/index/login/" class="to_register"> 登录 </a>
+                    </p>
+
+                    <div class="clearfix"></div>
+                    <br />
+                </div>
+            </form>
+        </section>
+    </div>
     </body>
 </html>
-
-<script  type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 <script>
     $("#register_submit").click(function () {
         var data = $("#user_register").serializeArray();
@@ -30,8 +64,6 @@
                 alert(returnJson.msg);
                 return false;
             }
-            // $.cookie('user_chat_token', returnJson.data.token);
-            // window.location.href = "/?token="+returnJson.data.token;
             window.location.href = "/index/login"
         });
     });
