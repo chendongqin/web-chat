@@ -228,7 +228,7 @@
         });
         $("#search-friends-button").click(function () {
             var searchStr = $("#user-search-str").val();
-            var search_status = search_user(searchStr,1);
+            var search_status = this.search_user(searchStr,1);
             console.log(search_status);
             if(search_status == true){
                 $('#modal-search-friends').modal('hide');
