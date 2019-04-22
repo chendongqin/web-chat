@@ -240,6 +240,8 @@
         $("#search-user-result").empty();
         $("#search-user-error").empty();
         var status = true;
+        //关闭异步
+        $.ajaxSettings.async = false;
         $.post('/api/user/search',{searchStr:searchStr,page:page},function (returnJson) {
             if(returnJson.status == false){
                 $("#search-user-error").attr("style","display:block;color: red;");
