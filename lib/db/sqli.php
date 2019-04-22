@@ -205,6 +205,7 @@ class sqli
             $rows = [];
             if ($count > 0) {
                 $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table .'`'. $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
+                var_dump($sql);
                 $result = $this->link->query($sql);
                 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     $rows[] = $row;

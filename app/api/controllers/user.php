@@ -25,6 +25,9 @@ class  user extends userApi
     {
         $user = $this->getLoginUser();
         $friendId = $this->helper->getParam('friend_id', 0, 'int');
+        if($user['id'] == $friendId){
+            return $this->error('不能加自己为好友');
+        }
         $groupId = $this->helper->getParam('group_id', 0, 'int');
         $db = $this->getDb();
         $friend = $db->find('user', ['id' => $friendId]);
