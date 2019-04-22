@@ -47,8 +47,8 @@
                         <img src="<?php echo empty($login_user['avatar'])?'/static/imgs/user/default.jpg':$login_user['avatar'];?>" alt="更换头像" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <span>您好,</span>
                         <h2><?php echo $login_user['name'] ?></h2>
+                        <span title="<?php echo $login_user['feel']?$login_user['feel']:'没有编辑心情...';?>"><?php echo strlen($login_user['feel'])>8?substr($login_user['feel'],0,8):$login_user['feel']?></span>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -61,7 +61,7 @@
                         <h3>好友列表</h3>
                         <ul class="nav side-menu">
                             <?php foreach ($groups as $value):?>
-                                <li><a><i class="fa fa-home"></i> <?php echo $value['name'];?> <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-user"></i> <?php echo $value['name'];?> <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="index.html">Dashboard</a></li>
                                         <li><a href="index2.html">Dashboard2</a></li>
