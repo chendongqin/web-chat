@@ -201,8 +201,7 @@ class sqli
             $countSql = 'SELECT COUNT(1) AS countNum FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
             $result = $this->link->query($countSql);
             $res = $result->fetch_array(MYSQLI_ASSOC);
-            var_dump($res);
-            $count = $res['countNum'];
+            $count = (int)$res['countNum'];
             $result->close();
             $rows = [];
             if ($count > 0) {
