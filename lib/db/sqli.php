@@ -205,7 +205,6 @@ class sqli
             $rows = [];
             if ($count > 0) {
                 $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table .'`'. $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
-                var_dump($sql);
                 $result = $this->link->query($sql);
                 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     $rows[] = $row;
@@ -367,7 +366,7 @@ class sqli
         if ($limit == 0) {
             return '';
         }
-        $begin = $page * $limit;
+        $begin = (int)($page-1) * $limit;
         $str = ' LIMIT ' . $begin . ',' . $limit . ' ';
         return $str;
     }
