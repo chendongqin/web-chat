@@ -62,7 +62,7 @@ class  user extends userApi
         $page = $this->helper->getParam('page',1,'int');
         $pageLimit = $this->helper->getParam('pagelimit',3,'int');
         if(empty($searchStr)){
-            return $this->error('查询不能为空');
+            return $this->error('查询条件不能为空');
         }
         if(is_numeric($searchStr)){
             $where = "`id` like '".$searchStr."%' OR `user_name`  like '".$searchStr."%' OR `name` like '%".$searchStr."%'";
