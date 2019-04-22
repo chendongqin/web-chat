@@ -245,7 +245,7 @@
                 $("#search-user-error").attr("style","display:block;color: red;");
                 $("#search-user-error").html("<div class=\"col-sm-10\">\n" + returnJson.msg +
                     "                            </div>");
-                status = true;
+                status = false;
             }else {
                 $("#search-user-total").html(returnJson.data.total);
                 if(returnJson.data.pages > 1){
