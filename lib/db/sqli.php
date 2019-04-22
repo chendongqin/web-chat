@@ -199,7 +199,6 @@ class sqli
         $fieldStr = $this->field($field);
         try {
             $countSql = 'SELECT COUNT(1) FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
-            var_dump($countSql);die();
             $result = $this->link->query($countSql);
             $count = $result->num_rows;
             $result->close();
@@ -435,7 +434,7 @@ class sqli
                 }
             }
         } elseif (is_string($where)) {
-            $whereStr = addslashes($where);
+            $whereStr = $where;
         }
         $whereStr = rtrim($whereStr, 'AND ');
         if ($whereOr) {
@@ -456,7 +455,7 @@ class sqli
                     }
                 }
             } elseif (is_string($whereOr)) {
-                $whereOrStr = addslashes($where);
+                $whereOrStr = $where;
             }
             $whereOrStr = rtrim($whereOrStr, 'AND ');
             $whereStr = '(' . $whereStr . ') OR (' . $whereOrStr . ')';
