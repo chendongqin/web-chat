@@ -199,6 +199,7 @@ class sqli
         $fieldStr = $this->field($field);
         try {
             $countSql = 'SELECT COUNT(1) FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
+            var_dump($countSql);die();
             $result = $this->link->query($countSql);
             $count = $result->num_rows;
             $result->close();
