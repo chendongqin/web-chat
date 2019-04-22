@@ -163,6 +163,7 @@
 
         </div>
         <?php include PUBLIC_PATH.'static/windows/user/search.phtml'?>
+        <?php include PUBLIC_PATH.'static/windows/user/search_users.phtml'?>
         <!-- /page content -->
 
         <!-- footer content -->
@@ -224,6 +225,10 @@
     (function() {
         $(".add-friends").click(function () {
             $('#modal-search-friends').modal('show');
+        });
+        $(".search-friends-button").click(function () {
+            $('#modal-search-friends').modal('hidden');
+            $('#modal-search-friends-result').modal('show');
         });
     })();
 </script>

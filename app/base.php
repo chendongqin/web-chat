@@ -84,6 +84,14 @@ class base
         return $this->json($returnData, $callback);
     }
 
+    protected function getPages($count, $pageLimit)
+    {
+        if ($pageLimit <= 0) {
+            return 0;
+        }
+        return ceil($count / $pageLimit);
+    }
+
     /**
      * @return string
      */
