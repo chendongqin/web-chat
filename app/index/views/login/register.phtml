@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <style>
+            * {
+                margin: 0px;
+                padding: 0px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form name="user_register" id="user_register" action="">
+            <label>账号：<input name="user_name" value="" type="text"><br/></label>
+            <label>密码：<input name="password" value="" type="password"><br/></label>
+            <label>确认密码：<input name="sure" value="" type="password"><br/></label>
+            <label>昵称：<input name="name" value="" type="text"><br/></label>
+            <label><input value="登录" type="button" id="register_submit"></label>
+        </form>
+    </body>
+</html>
+
+<script  type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $("#register_submit").click(function () {
+        var data = $("#user_register").serializeArray();
+        $.post("/api/login/register",data,function (returnJson) {
+            if(returnJson.status == false){
+                alert(returnJson.msg);
+                return false;
+            }
+            // $.cookie('user_chat_token', returnJson.data.token);
+            // window.location.href = "/?token="+returnJson.data.token;
+            window.location.href = "/index/login"
+        });
+    });
+</script>

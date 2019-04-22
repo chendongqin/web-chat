@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+    <body>
+        <div class="chat">
+            <ul>好友列表
+            <?php foreach ($groups as $group):?>
+                <li class="friends_group" data-id="<?php echo $group['id']?>"><?php echo $group['name']?></li>
+            <?php endforeach;?>
+            </ul>
+        </div>
+    </body>
+</html>

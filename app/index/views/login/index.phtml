@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="/static/css/chat.css">
+    </head>
+
+    <body>
+        <div class="chat">
+            <div class="main">
+                <form name="user_login" id="user_login" action="" class="login-from">
+                    <label>账号：<input name="user_name" value="" type="text"><br/></label>
+                    <label>密码：<input name="password" value="" type="password"><br/></label>
+                    <label><input value="登录" type="button" id="login_submit"><br/></label>
+                    <label><a href="/index/login/register">注册</a></label>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $("#login_submit").click(function () {
+        var data = $("#user_login").serializeArray();
+        $.post("/api/login/index",data,function (returnJson) {
+            if(returnJson.status == false){
+                alert(returnJson.msg);
+                return false;
+            }
+            window.location.href = "/"
+        });
+    });
+</script>
