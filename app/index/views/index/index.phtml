@@ -229,11 +229,13 @@
         $("#search-friends-button").click(function () {
             var searchStr = $("#user-search-str").val();
             var status = search_user(searchStr,1);
+            console.log(status);
             if(status == false){
                 return false;
+            }else{
+                $('#modal-search-friends').modal('hide');
+                $('#modal-search-friends-result').modal('show');
             }
-            $('#modal-search-friends').modal('hide');
-            $('#modal-search-friends-result').modal('show');
         });
         function search_user(searchStr,page=1) {
             $("#search-user-result").empty();
