@@ -239,12 +239,13 @@
     function search_user(searchStr,page=1) {
         $("#search-user-result").empty();
         $("#search-user-error").empty();
-        var status = false;
+        var status = true;
         $.post('/api/user/search',{searchStr:searchStr,page:page},function (returnJson) {
             if(returnJson.status == false){
                 $("#search-user-error").attr("style","display:block;color: red;");
                 $("#search-user-error").html("<div class=\"col-sm-10\">\n" + returnJson.msg +
                     "                            </div>");
+                status = true;
             }else {
                 $("#search-user-total").html(returnJson.data.total);
                 if(returnJson.data.pages > 1){
@@ -281,7 +282,6 @@
                         "</div>";
                 });
                 $("#search-user-result").html(str);
-                status = true;
             }
         });
         return status;
