@@ -43,6 +43,7 @@ class userBase extends base
             $this->error('用户不存在');
         }
         $this->user = $user;
+        $this->assign('login_user',$user);
         parent::_init();
     }
 

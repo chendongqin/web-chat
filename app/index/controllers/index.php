@@ -30,6 +30,7 @@ class index extends userBase
         array_unshift($groups, $this->group_first);
         $groups = array_merge($groups,$this->group_end);
         $this->assign('groups', $groups);
+        $this->assign('use_set',$this->set);
         return $this->display();
     }
 }
