@@ -229,7 +229,6 @@
         $("#search-friends-button").click(function () {
             var searchStr = $("#user-search-str").val();
             var search_status = search_user(searchStr,1);
-            console.log(search_status);
             if(search_status == true){
                 $('#modal-search-friends').modal('hide');
                 $('#modal-search-friends-result').modal('show');
@@ -276,12 +275,12 @@
                 }
                 var str = '';
                 $.each(returnJson.data.users,function(index,value){
-                    str += "<label class=\"col-sm-2 control-label\">"+ value.id +"</label>\n" +
+                    str += "<div class=\"form-group\"><label class=\"col-sm-2 control-label\">"+ value.id +"</label>\n" +
                         "<label class=\"col-sm-2 control-label\">"+ value.user_name +"</label>\n" +
                         "<label class=\"col-sm-2 control-label\">"+ value.name +"</label>\n" +
                         "<div class=\"col-sm-4\">\n" +
-                        "    <button type=\"button\" class=\"btn btn-default pull-right add-user-friends-button\" data-user_id=\""+ value.id +"\"  data-dismiss=\"modal\"></button>\n" +
-                        "</div>";
+                        "    <button type=\"button\" class=\"btn btn-default pull-right add-user-friends-button\" data-user_id=\""+ value.id +"\"  data-dismiss=\"modal\">添加好友</button>\n" +
+                        "</div></div>";
                 });
                 $("#search-user-result").html(str);
             }
