@@ -25,6 +25,7 @@ if(isset($argv[2])){
 function loadClass($class){
     $class = str_replace('\\', '/', $class);
     $class = ROOT_PATH . $class . '.php';
+    var_dump($class);
     if (file_exists($class)) {
         include $class;
     } else {
