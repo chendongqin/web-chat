@@ -58,10 +58,10 @@ class start
         }
         $controller = '\app\\' . self::$MODULE . '\controllers\\' . self::$CONTROLLER;
         if (!class_exists($controller)) {
-            exit($controller . '控制器不存在');
+            throw new \Error($controller . '控制器不存在',500);
         }
         if (!method_exists($controller, self::$ACTION)) {
-            exit(self::$ACTION . '方法不存在');
+            throw new \Error(self::$ACTION . '方法不存在',500);
         }
         $dispatch = new $controller($controller, self::$ACTION);
         $dispatch->_setInit(self::$MODULE,self::$CONTROLLER,self::$ACTION);
