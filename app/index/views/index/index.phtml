@@ -230,18 +230,6 @@
             var page = $(this).attr('data-page');
             search_user(searchStr,page);
         });
-        $(".add-user-friends-button").click(function () {
-            var friend_id = $(this).attr("data-data-user_id").val();
-            console.log('添加'+friend_id);
-            let msg = {
-                friend_id : friend_id,
-                group_id : 0,
-                reason : '我喜欢你',
-                quest_type : 'add_apply'
-            };
-            ws.send(JSON.stringify(msg));
-            $('#modal-search-friends-result').modal('hide');
-        })
     })();
 
     function link (user_id) {
@@ -355,12 +343,24 @@
                         "<label class=\"col-sm-2 control-label\">"+ value.user_name +"</label>\n" +
                         "<label class=\"col-sm-2 control-label\">"+ value.name +"</label>\n" +
                         "<div class=\"col-sm-4\">\n" +
-                        "    <button type=\"button\" class=\"btn btn-default pull-right add-user-friends-button\" data-user_id=\""+ value.id +"\" >添加好友</button>\n" +
+                        "    <button type=\"button\" class=\"btn btn-default pull-right\" onclick='addfriends("+value.id+")'>添加好友</button>\n" +
                         "</div></div>";
                 });
                 $("#search-user-result").html(str);
             }
         });
         return status;
+    }
+
+    function addfriends(friend_id) {
+        console.log('添加'+friend_id);
+        let msg = {
+            friend_id : friend_id,
+            group_id : 0,
+            reason : '我喜欢你',
+            quest_type : 'add_apply'
+        };
+        ws.send(JSON.stringify(msg));
+        $('#modal-search-friends-result').modal('hide');
     }
 </script>
