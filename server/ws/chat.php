@@ -242,7 +242,7 @@ class chat
         if (empty($friend)) {
             return $this->errorMsg($fd,'没有该用户信息');
         }
-        $userFriend = $db->find('friend', ['user_id' => $user_id, 'friend_id' => $receive['friend_id']], 'id desc');
+        $userFriend = $db->find('friends', ['user_id' => $user_id, 'friend_id' => $receive['friend_id']], 'id desc');
         if (!empty($userFriend)) {
             return $this->errorMsg($fd,$friend['name'] . ' 已经是您的好友');
         }
