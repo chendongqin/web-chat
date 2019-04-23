@@ -31,9 +31,8 @@ class index extends userBase
         array_unshift($groups, $this->group_first);
         $groups = array_merge($groups,$this->group_end);
         //验证通知
-        $applyRequest = $db->count('apply',['friend_id'=>$user['id'],'friend_is_read'=>0]);
-        $applyResponse = $db->count('apply',['user_id'=>$user['id'],'is_read'=>0]);
-        $applyNum = $applyRequest + $applyResponse;
+        $where = ['user_id'=>$user['id'],'status>0' ,'OR:'=>['friend_id'=>$user['id'],'status'=>0]];
+        $applyNum = $db->count('apply',$where);
 
         $this->assign('groups', $groups);
         $this->assign('use_set',$this->set);

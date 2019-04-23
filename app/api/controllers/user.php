@@ -47,7 +47,7 @@ class  user extends userApi
         $limit = $this->helper->getParam('limit',3,'int');
         $user = $this->getLoginUser();
         $db = $this->getDb();
-        $where = ['user_id'=>$user['id'] ,'OR:'=>['friend_id'=>$user['id']]];
+        $where = ['user_id'=>$user['id'],'status>0' ,'OR:'=>['friend_id'=>$user['id'],'status'=>0]];
         $count = 0;
         $result = $db->select('apply',$where,'update_at desc,id desc',1,$limit,$count);
         $lists = [];

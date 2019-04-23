@@ -272,9 +272,8 @@ class chat
         $friend_fd = $this->getClient($receive['friend_id']);
         if(!empty($friend_fd)){
             //验证通知
-            $applyRequest = $db->count('apply',['friend_id'=>$receive['friend_id'],'friend_is_read'=>0]);
-            $applyResponse = $db->count('apply',['user_id'=>$receive['friend_id'],'is_read'=>0]);
-            $applyNum = $applyRequest + $applyResponse;
+            $where = ['user_id'=>$receive['friend_id'],'status>0' ,'OR:'=>['friend_id'=>$receive['friend_id'],'status'=>0]];
+            $applyNum = $db->count('apply',$where);
             $msg = $this->buildJson(['apply_num'=>$applyNum],self::APPLYTYPE);
             $this->intoTask($fd,$msg,[$friend_fd]);
         }
