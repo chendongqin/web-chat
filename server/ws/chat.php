@@ -47,19 +47,25 @@ class chat
         $this->table->column('nickname', \swoole_table::TYPE_STRING, 64);
         $this->table->create();
         //创建ws服务
-        $this->server = $server = new \swoole_websocket_server('0.0.0.0', $this->port);
+        $this->server = new \swoole_websocket_server('0.0.0.0', $this->port);
         //服务设置
-        $server->set([
+        $this->server->set([
             'task_worker_num' => 4
         ]);
         //创建连接并完成握手
-        $server->on('open', [$this, 'open']);
-        $server->on('message', [$this, 'message']);
-        $server->on('close', [$this, 'close']);
-        $server->on('task', [$this, 'task']);
-        $server->on('finish', [$this, 'finish']);
-
-        $server->start();
+        $this->open();
+        $this->message();
+        $this->close();
+        $this->task();
+        $this->finish();
+        $this->start();
+//        $server->on('open', [$this, 'open']);
+//        $server->on('message', [$this, 'message']);
+//        $server->on('close', [$this, 'close']);
+//        $server->on('task', [$this, 'task']);
+//        $server->on('finish', [$this, 'finish']);
+//
+//        $server->start();
     }
 
 
@@ -131,18 +137,20 @@ class chat
         $this->server->push($fd, $data);
     }
 
-    public function task($server, $task_id, $from_id, $data)
+    public function task()
     {
-        $clients = $server->connections;
-        if (count($data['to']) > 0) {
-            $clients = $data['to'];
-        }
-        foreach ($clients as $fd) {
-            if (!in_array($fd, $data['from'])) {
-                //向用户端推送数据
-                $this->server->push($fd, $data['data']);
+        $this->server->on('task',function ($server, $task_id, $from_id, $data){
+            $clients = $server->connections;
+            if (count($data['to']) > 0) {
+                $clients = $data['to'];
             }
-        }
+            foreach ($clients as $fd) {
+                if (!in_array($fd, $data['from'])) {
+                    //向用户端推送数据
+                    $this->server->push($fd, $data['data']);
+                }
+            }
+        });
     }
 
     public function finish()
