@@ -11,7 +11,18 @@ if(!file_exists($class)){
     echo $class.' not exist';
     return false;
 }
-include $class;
+spl_autoload_register(function ($class){
+    $class = str_replace('\\', '/', $class);
+    $class = ROOT_PATH . $class . '.php';
+    if (file_exists($class)) {
+        include $class;
+    } else {
+        echo '没有找到文件';
+        return false;
+    }
+});
+//include $class;
+
 $argv[1] = str_replace('/','\\',$argv[1]);
 $className = '\server\\'.$argv[1];
 if(isset($argv[2])){
