@@ -143,10 +143,7 @@ class chat
                 $clients = $data['to'];
             }
             foreach ($clients as $fd) {
-                if (!in_array($fd, $data['from'])) {
-                    //向用户端推送数据
-                    $this->server->push($fd, $data['data']);
-                }
+                $this->server->push($fd, $data['data']);
             }
         });
     }
