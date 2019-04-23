@@ -204,9 +204,11 @@
 </html>
 
 <script>
-    (function() {
+    (
+        function() {
         let user_id = $("#login_user_id").val();
-        link(user_id);
+        let ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
+        link();
         get_apply_lists();
         $(".add-friends").click(function () {
             $('#modal-search-friends').modal('show');
@@ -232,8 +234,7 @@
         });
     })();
 
-    function link (user_id) {
-        let ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
+    function link () {
         ws.onopen = function(event){
             console.log('连接成功！');
         };
@@ -353,18 +354,7 @@
         return status;
     }
 
-    function addfriends(friend_id) {
-        console.log('添加'+friend_id);
-        let msg = {
-            friend_id : friend_id,
-            group_id : 0,
-            reason : '我喜欢你',
-            quest_type : 'add_apply'
-        };
-        ws.send(JSON.stringify(msg));
-        $('#modal-search-friends-result').modal('hide');
-    }
-    
+
     function more_apply_lists() {
         console.log('more');
     }
