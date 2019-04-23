@@ -357,6 +357,17 @@
         return status;
     }
 
+    function addfriends(friend_id) {
+        console.log('添加'+friend_id);
+        let msg = {
+            friend_id : friend_id,
+            group_id : 0,
+            reason : '我喜欢你',
+            quest_type : 'add_apply'
+        };
+        ws.send(JSON.stringify(msg));
+        $('#modal-search-friends-result').modal('hide');
+    }
 
     function more_apply_lists() {
         console.log('more');
