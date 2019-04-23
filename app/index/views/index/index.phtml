@@ -232,6 +232,7 @@
         });
         $(".add-user-friends-button").click(function () {
             var friend_id = $(this).attr("data-data-user_id").val();
+            console.log('添加'+friend_id);
             let msg = {
                 friend_id : friend_id,
                 group_id : 0,
