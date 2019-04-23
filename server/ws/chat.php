@@ -72,7 +72,7 @@ class chat
     public function open()
     {
         $this->server->on('open', function (\swoole_websocket_server $server, \swoole_http_request $request) {
-            $res = $this->createUser($request->fd);
+            $res = $this->createUser($request->fd,$request->get['user_id']);
             $fds = $this->getFds(self::SELFMSG,$request->fd);
             if ($res) {
                 $data = $this->buildJson(['msg'=>'登陆成功'],self::CLIENTYPE);
@@ -83,27 +83,22 @@ class chat
         });
     }
 
-    public function createUser($fd)
+    public function createUser($fd ,$user_id)
     {
-        $res = $this->server->on('request', function ($request, $response) use ($fd) {
-            $user_id = $request->get['user_id'];
-            echo $user_id;
-            $db = $this->getDb();
-            $user = $db->find('user', ['id' => $user_id]);
-            if (empty($user)) {
-                return false;
-            }
-            $this->setClient($user_id, $fd);
-            $this->table->set($user_id, [
-                'id'       => $user_id,
-                'fd'       => $fd,
-                'avatar'   => empty($user['avatar']) ? $user['avatar'] : '/static/imgs/user/default.jpg',
-                'feel'     => $user['feel'],
-                'nickname' => $user['name']
-            ]);
-            return true;
-        });
-        return $res;
+        $db = $this->getDb();
+        $user = $db->find('user', ['id' => $user_id]);
+        if (empty($user)) {
+            return false;
+        }
+        $this->setClient($user_id, $fd);
+        $this->table->set($user_id, [
+            'id'       => $user_id,
+            'fd'       => $fd,
+            'avatar'   => empty($user['avatar']) ? $user['avatar'] : '/static/imgs/user/default.jpg',
+            'feel'     => $user['feel'],
+            'nickname' => $user['name']
+        ]);
+        return true;
     }
 
     public function message()

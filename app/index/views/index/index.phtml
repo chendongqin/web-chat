@@ -254,7 +254,7 @@
         ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
         ws.onopen = function(event){
             console.log(event);
-            alert(event.msg);
+            alert('已连接');
         };
         // ws.onmessage = function (event) {
         //     var msg = "<p>"+event.data+"</p>";
