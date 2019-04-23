@@ -15,10 +15,10 @@ class redis{
         $conf = array_merge($config,$conf);
         $redis = new \Redis();
         try{
-            $redis->pconnect($conf['host'],$conf['port'],0.0,$conf['index']);
+            $redis->pconnect($conf['host'],$conf['port']);
             $this->redis = $redis;
         }catch (\Error $error){
-            die('连接错误 host:'.$conf['host'].',port:'.$conf['port'].',index:'.$conf['index']);
+            die('连接错误 host:'.$conf['host'].',port:'.$conf['port']);
         }
     }
 

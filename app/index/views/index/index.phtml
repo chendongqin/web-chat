@@ -253,13 +253,14 @@
     function link (user_id) {
         ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
         ws.onopen = function(event){
-            console.log(event);
-            alert('已连接');
+
         };
-        // ws.onmessage = function (event) {
-        //     var msg = "<p>"+event.data+"</p>";
-        //     $("#msgArea").append(msg);
-        // }
+        ws.onmessage = function (event) {
+            // var msg = "<p>"+event.data+"</p>";
+            // $("#msgArea").append(msg);
+            console.log(event);
+            console.log(event.data);
+        };
         ws.onclose = function(event){
             alert("已经与服务器断开连接\r\n当前连接状态："+this.readyState);
         };
