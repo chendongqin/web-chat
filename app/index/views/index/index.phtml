@@ -144,6 +144,7 @@
         </div>
         <?php include PUBLIC_PATH.'static/windows/user/search.phtml'?>
         <?php include PUBLIC_PATH.'static/windows/user/search_users.phtml'?>
+        <?php include PUBLIC_PATH.'static/windows/user/addfriens.phtml'?>
         <!-- /page content -->
 
         <!-- footer content -->
@@ -232,10 +233,21 @@
             var page = $(this).attr('data-page');
             search_user(searchStr,page);
         });
-    }
+        $("#add-friends-button").click(function () {
+            var friend_id = $("#add-friend-user_id").val();
+            var group_id = $("#add-friend-group_id").val();
+            var reson = $("#add-friend-reason").val();
+            let msg = {
+                friend_id : friend_id,
+                group_id : group_id,
+                reason : reson,
+                quest_type : 'add_apply'
+            };
+            ws.send(JSON.stringify(msg));
+            $("#modal-add-friends").modal('hide');
+        });
 
-
-    )();
+    })();
 
     function link () {
         ws.onopen = function(event){
@@ -348,7 +360,7 @@
                         "<label class=\"col-sm-2 control-label\">"+ value.user_name +"</label>\n" +
                         "<label class=\"col-sm-2 control-label\">"+ value.name +"</label>\n" +
                         "<div class=\"col-sm-4\">\n" +
-                        "    <button type=\"button\" class=\"btn btn-default pull-right\" onclick='addfriends("+value.id+")'>添加好友</button>\n" +
+                        "    <button type=\"button\" class=\"btn btn-default pull-right\" onclick='show_add_friend("+value.id+")'>添加好友</button>\n" +
                         "</div></div>";
                 });
                 $("#search-user-result").html(str);
@@ -356,17 +368,11 @@
         });
         return status;
     }
-
-    function addfriends(friend_id) {
-        console.log('添加'+friend_id);
-        let msg = {
-            friend_id : friend_id,
-            group_id : 0,
-            reason : '我喜欢你',
-            quest_type : 'add_apply'
-        };
-        ws.send(JSON.stringify(msg));
+    
+    function show_add_friend(friend_id) {
         $('#modal-search-friends-result').modal('hide');
+        $("#add-friend-user_id").val(friend_id);
+        $("#modal-add-friends").modal('show');
     }
 
     function more_apply_lists() {
