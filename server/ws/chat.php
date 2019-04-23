@@ -85,7 +85,7 @@ class chat
 
     public function createUser($fd)
     {
-        $res = $this->server->on('request', function ($request, $response) use ($fd) {
+        $res = $this->server->on('handshake', function ($request, $response) use ($fd) {
             $user_id = $request->get['user_id'];
             $db = $this->getDb();
             $user = $db->find('user', ['id' => $user_id]);
