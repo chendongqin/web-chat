@@ -127,29 +127,9 @@
                         <li role="presentation" class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green">6</span>
+                                <span class="badge bg-green user-apply-num" <?php if ($applyNum==0):?>style="display: none;" <?php endif;?> ><?php echo $applyNum;?></span>
                             </a>
-                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                <li>
-                                    <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="text-center">
-                                        <a>
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list user-apply-list" role="menu" >
                             </ul>
                         </li>
                     </ul>
@@ -219,6 +199,7 @@
 <!-- Custom Theme Scripts -->
 <script src="/static/build/js/custom.min.js"></script>
 
+
 </body>
 </html>
 
@@ -226,6 +207,7 @@
     (function() {
         let user_id = $("#login_user_id").val();
         link(user_id);
+        get_apply_lists();
         $(".add-friends").click(function () {
             $('#modal-search-friends').modal('show');
         });
@@ -253,16 +235,24 @@
     function link (user_id) {
         ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
         ws.onopen = function(event){
-
+            console.log('连接成功！');
         };
         ws.onmessage = function (event) {
-            // var msg = "<p>"+event.data+"</p>";
-            // $("#msgArea").append(msg);
-            console.log(event);
-            console.log(event.data);
+            var data = event.data;
+            if(data.status == false){
+                alert(data.data.msg);
+                return false;
+            }
+            switch (data.type) {
+                case 'client':
+                    console.log(data.data.msg);
+                    break;
+                case 'apply':
+                    apply_msg(data.data);
+            }
         };
         ws.onclose = function(event){
-            alert("已经与服务器断开连接\r\n当前连接状态："+this.readyState);
+            alert("服务器错误！");
         };
 
         ws.onerror = function(event){
@@ -270,6 +260,44 @@
         };
     }
 
+    function apply_msg(data) {
+
+    }
+
+    function get_apply_lists() {
+        $(".user-apply-list").empty();
+        var endHtml = "<li>\n" +
+            "    <div class=\"text-center\">\n" +
+            "        <a>\n" +
+            "            <strong id=\"user-apply-lists-more\">查看更多</strong>\n" +
+            "            <i class=\"fa fa-angle-right\"></i>\n" +
+            "        </a>\n" +
+            "    </div>\n" +
+            "</li>";
+        $.get('/api/user/applylist',function (returnjson) {
+            var html = '';
+            if(returnjson.status == false){
+                return false;
+            }
+            $.each(returnjson.data.lists,function(index,value){
+                html += "<li>\n" +
+                    "    <a>\n" +
+                    "        <span class=\"image\"><img src=\""+ value.user_avatar +"\" alt=\"Profile Image\" /></span>\n" +
+                    "        <span>\n" +
+                    "                          <span>"+value.user_name+"</span>\n" +
+                    "                          <span class=\"time\">"+value.update_at+"</span>\n" +
+                    "                        </span>\n" +
+                    "        <span class=\"message\">\n" +
+                    "                         "+value.msg+"\n" +
+                    "                        </span>\n" +
+                    "    </a>\n" +
+                    "</li>";
+            });
+            html += endHtml;
+            $(".user-apply-list").html(html);
+        });
+
+    }
 
     function search_user(searchStr,page=1) {
         $("#search-user-result").empty();

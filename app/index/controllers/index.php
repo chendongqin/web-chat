@@ -26,11 +26,18 @@ class index extends userBase
     {
         $user = $this->getLoginUser();
         $db = $this->getDb();
+        //好友分组
         $groups = $db->select('group', ['user_id' => $user['id']], 'id asc');
         array_unshift($groups, $this->group_first);
         $groups = array_merge($groups,$this->group_end);
+        //验证通知
+        $applyRequest = $db->count(['friend_id'=>$user['id'],'friend_is_read'=>0]);
+        $applyResponse = $db->count(['user_id'=>$user['id'],'is_read'=>0]);
+        $applyNum = $applyRequest + $applyResponse;
+
         $this->assign('groups', $groups);
         $this->assign('use_set',$this->set);
+        $this->assign('applyNum',$applyNum);
         return $this->display();
     }
 }
