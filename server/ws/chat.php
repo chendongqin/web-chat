@@ -273,7 +273,7 @@ class chat
             $applyResponse = $db->count('apply',['user_id'=>$receive['friend_id'],'is_read'=>0]);
             $applyNum = $applyRequest + $applyResponse;
             $msg = $this->buildJson(['apply_num'=>$applyNum],self::APPLYTYPE);
-            $this->intoTask($fd,$msg,$friend_fd);
+            $this->intoTask($fd,$msg,[$friend_fd]);
         }
 
         return true;
