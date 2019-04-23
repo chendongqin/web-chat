@@ -230,7 +230,7 @@
             var page = $(this).attr('data-page');
             search_user(searchStr,page);
         });
-        $("#add-user-friends-button").click(function () {
+        $(".add-user-friends-button").click(function () {
             var friend_id = $(this).attr("data-data-user_id").val();
             let msg = {
                 friend_id : friend_id,
@@ -239,6 +239,7 @@
                 quest_type : 'add_apply'
             };
             ws.send(JSON.stringify(msg));
+            $('#modal-search-friends-result').modal('hide');
         })
     })();
 
