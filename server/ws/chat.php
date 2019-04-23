@@ -7,6 +7,8 @@
  */
 
 namespace server\ws;
+use lib\db\sqli;
+use lib\ku\redis;
 class chat
 {
     //消息类型
@@ -115,7 +117,7 @@ class chat
     public function getDb()
     {
         if (empty($this->Db)) {
-            $this->Db = new \lib\db\sqli();
+            $this->Db = new sqli();
         }
         return $this->Db;
     }
@@ -123,7 +125,7 @@ class chat
     public function getRedis()
     {
         if (empty($this->redis)) {
-            $this->redis = new \lib\ku\redis();
+            $this->redis = new redis();
         }
         return $this->redis;
     }
