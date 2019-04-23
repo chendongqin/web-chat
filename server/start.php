@@ -15,5 +15,3 @@ include $class;
 $argv[1] = str_replace('/','\\',$argv[1]);
 $className = '\server\\'.$argv[1];
 $app  = new $className();
-$app->start();
-unset($app);

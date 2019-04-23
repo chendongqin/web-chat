@@ -167,6 +167,7 @@
         <!-- /page content -->
 
         <!-- footer content -->
+        <input type="hidden" value="<?php echo $login_user['id'];?>" id="login_user_id">
         <footer>
             <div class="pull-right">
                 聊天室创作人—— <a href="#">东</a>
@@ -223,6 +224,8 @@
 
 <script>
     (function() {
+        let user_id = $("#login_user_id").val();
+        link(user_id);
         $(".add-friends").click(function () {
             $('#modal-search-friends').modal('show');
         });
@@ -246,6 +249,27 @@
             search_user(searchStr,page);
         });
     })();
+
+    function link (user_id) {
+        ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
+        ws.onopen = function(event){
+            console.log(event);
+            alert(event.msg);
+        };
+        // ws.onmessage = function (event) {
+        //     var msg = "<p>"+event.data+"</p>";
+        //     $("#msgArea").append(msg);
+        // }
+        ws.onclose = function(event){
+            alert("已经与服务器断开连接\r\n当前连接状态："+this.readyState);
+        };
+
+        ws.onerror = function(event){
+            alert("WebSocket异常！");
+        };
+    }
+
+
     function search_user(searchStr,page=1) {
         $("#search-user-result").empty();
         $("#search-user-error").empty();

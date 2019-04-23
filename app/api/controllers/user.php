@@ -59,6 +59,7 @@ class  user extends userApi
         return $this->success();
     }
 
+    //查询返回结果
     public function search()
     {
         $searchStr = $this->helper->getParam('searchStr','','string');

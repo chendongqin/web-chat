@@ -26,7 +26,7 @@ class redis{
         return $this->redis->keys($pattern);
     }
 
-    public function set($key,$value,$timeOut){
+    public function set($key,$value,$timeOut=0){
         $this->redis->set($key,$value,$timeOut);
         return $this;
     }
