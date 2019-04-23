@@ -25,6 +25,8 @@ class login extends base
 //        $token = token::set('user_login', $user['id'], 600);
         $session = new session();
         $session::set('login_user', $user['id']);
+        $user['login_at'] = date('YmdHis');
+        $db->update('user',$user);
         return $this->success('成功', ['user_id' => $user['id']]);
     }
 
@@ -49,10 +51,13 @@ class login extends base
         if ($exist) {
             return $this->error('用户名已占用');
         }
+        $num = rand(1,3);
+        $avatar = '/static/imgs/user/default_'.$num.'.jpg';
         $data = [
             'user_name' => $userName,
             'name'      => $name,
-            'password'  => tool::encryption($password)
+            'password'  => tool::encryption($password),
+            'avatar'  => $avatar,
         ];
         $res = $db->insert('user', $data);
         if ($res === false) {

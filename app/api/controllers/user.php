@@ -19,46 +19,6 @@ class  user extends userApi
 
     }
 
-
-    //添加好友
-    public function addfrieds()
-    {
-        $user = $this->getLoginUser();
-        $friendId = $this->helper->getParam('friend_id', 0, 'int');
-        if($user['id'] == $friendId){
-            return $this->error('不能加自己为好友');
-        }
-        $groupId = $this->helper->getParam('group_id', 0, 'int');
-        $db = $this->getDb();
-        $friend = $db->find('user', ['id' => $friendId]);
-        if (empty($friend)) {
-            return $this->error('没有改用户');
-        }
-        $userFriend = $db->find('friend', ['user_id' => $user['id'], 'friend_id' => $friendId], 'id desc');
-        if (!empty($userFriend)) {
-            return $this->error($friend['name'] . ' 已经是您的好友');
-        }
-        $exist = $db->find('apply', ['user_id' => $user['id'], 'friend_id' => $friendId], 'id desc');
-        if (!empty($exist)) {
-            $exist['status'] = 0;
-            $exist['group_id'] = $groupId;
-            $exist['is_read'] = 0;
-            $exist['friend_is_read'] = 0;
-            $res = $db->update('apply', $exist);
-        } else {
-            $data = [
-                'user_id'   => $user['id'],
-                'friend_id' => $friendId,
-                'group_id'  => $groupId,
-            ];
-            $res = $db->insert('apply', $data);
-        }
-        if (!$res) {
-            return $this->error();
-        }
-        return $this->success();
-    }
-
     //查询返回结果
     public function search()
     {
@@ -81,6 +41,34 @@ class  user extends userApi
         ];
         return $this->success('成功',$data);
     }
+
+    //获取请求的消息通知
+    public function applylist(){
+        $limit = $this->helper->getParam('limit',3,'int');
+        $user = $this->getLoginUser();
+        $db = $this->getDb();
+        $where = ['user_id'=>$user['id'] ,'OR:'=>['friend_id'=>$user['id']]];
+        $count = 0;
+        $result = $db->select('apply',$where,'update_at desc,id desc',1,$limit,$count);
+        $lists = [];
+        foreach ($result as $item){
+            if($item['user_id'] == $user['id']){
+                $status = $item['status'] == 1?'通过了':'拒绝了';
+                $applyUser = $db->find('user',['id'=>$item['friend_id']]);
+                $str = $applyUser['name'].$status.'您的好友申请：'.$item['refuse_reason'];
+            }else{
+                $applyUser = $db->find('user',['id'=>$item['user_id']]);
+                $str = $applyUser['name'].'请求添加好友：'.$item['refuse_reason'];
+            }
+            $list['user_name'] = $applyUser['name'];
+            $list['user_avatar'] = $applyUser['avatar'];
+            $list['update_at'] = date('Y-m-d H:i:s',strtotime($item['update_at']));
+            $list['msg'] = $str;
+            $lists[] = $list;
+        }
+        return $this->success('成功',['lists'=>$lists,'total'=>$count]);
+    }
+
 
     public function chat()
     {

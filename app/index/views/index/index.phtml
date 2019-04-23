@@ -44,7 +44,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<?php echo empty($login_user['avatar'])?'/static/imgs/user/default.jpg':$login_user['avatar'];?>" alt="更换头像" class="img-circle profile_img">
+                        <img src="<?php echo $login_user['avatar'];?>" alt="更换头像" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <h2><?php echo $login_user['name'] ?></h2>
@@ -108,7 +108,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo empty($login_user['avatar'])?'/static/imgs/user/default.jpg':$login_user['avatar'];?>" alt=""><?php echo $login_user['name'];?>
+                                <img src="<?php echo $login_user['avatar'];?>" alt=""><?php echo $login_user['name'];?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -230,25 +230,36 @@
             var page = $(this).attr('data-page');
             search_user(searchStr,page);
         });
+        $("#add-user-friends-button").click(function () {
+            var friend_id = $(this).attr("data-data-user_id").val();
+            let msg = {
+                friend_id : friend_id,
+                group_id : 0,
+                reason : '我喜欢你',
+                quest_type : 'add_apply'
+            };
+            ws.send(JSON.stringify(msg));
+        })
     })();
 
     function link (user_id) {
-        ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
+        let ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
         ws.onopen = function(event){
             console.log('连接成功！');
         };
         ws.onmessage = function (event) {
-            var data = event.data;
-            if(data.status == false){
-                alert(data.data.msg);
-                return false;
-            }
+            var data = JSON.parse(event.data);
             switch (data.type) {
+                case 'error':
+                    alert(data.data.msg);
+                    break;
                 case 'client':
                     console.log(data.data.msg);
                     break;
                 case 'apply':
-                    apply_msg(data.data);
+                    $(".user-apply-num").val(data.data.apply_num);
+                    get_apply_lists();
+                    break;
             }
         };
         ws.onclose = function(event){
@@ -260,24 +271,24 @@
         };
     }
 
-    function apply_msg(data) {
-
-    }
-
     function get_apply_lists() {
+        var limit = $(".user-apply-num").val();
         $(".user-apply-list").empty();
-        var endHtml = "<li>\n" +
-            "    <div class=\"text-center\">\n" +
-            "        <a>\n" +
-            "            <strong id=\"user-apply-lists-more\">查看更多</strong>\n" +
-            "            <i class=\"fa fa-angle-right\"></i>\n" +
-            "        </a>\n" +
-            "    </div>\n" +
-            "</li>";
-        $.get('/api/user/applylist',function (returnjson) {
+        $.get('/api/user/applylist?limit='+limit,function (returnjson) {
             var html = '';
             if(returnjson.status == false){
                 return false;
+            }
+            var endHtml = '';
+            if(returnjson.data.total>limit){
+                endHtml = "<li>\n" +
+                    "    <div class=\"text-center\">\n" +
+                    "        <a>\n" +
+                    "            <strong id=\"user-apply-lists-more\">查看更多</strong>\n" +
+                    "            <i class=\"fa fa-angle-right\"></i>\n" +
+                    "        </a>\n" +
+                    "    </div>\n" +
+                    "</li>";
             }
             $.each(returnjson.data.lists,function(index,value){
                 html += "<li>\n" +
