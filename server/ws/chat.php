@@ -207,7 +207,7 @@ class chat
     {
         $key = 'chat_client_' . $fd;
         $redis = $this->getRedis();
-        $redis->set($key, $user_id);
+        $redis->set($key, $user_id ,24*3600);
         return true;
     }
 
