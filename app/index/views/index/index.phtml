@@ -204,10 +204,10 @@
 </html>
 
 <script>
+    let user_id = $("#login_user_id").val();
+    let ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
     (
         function() {
-        let user_id = $("#login_user_id").val();
-        let ws = new WebSocket("ws://swoole.cddong.top:8500?user_id=" + user_id);//连接服务器
         link();
         get_apply_lists();
         $(".add-friends").click(function () {
@@ -232,7 +232,10 @@
             var page = $(this).attr('data-page');
             search_user(searchStr,page);
         });
-    })();
+    }
+
+
+    )();
 
     function link () {
         ws.onopen = function(event){
