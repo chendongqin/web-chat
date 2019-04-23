@@ -27,7 +27,11 @@ class redis{
     }
 
     public function set($key,$value,$timeOut=0){
-        $this->redis->set($key,$value,$timeOut);
+        if ($timeOut){
+            $this->redis->set($key,$value,$timeOut);
+        }else{
+            $this->redis->set($key,$value);
+        }
         return $this;
     }
 
