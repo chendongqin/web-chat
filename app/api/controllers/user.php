@@ -55,10 +55,10 @@ class  user extends userApi
             if($item['user_id'] == $user['id']){
                 $status = $item['status'] == 1?'通过了':'拒绝了';
                 $applyUser = $db->find('user',['id'=>$item['friend_id']]);
-                $str = $applyUser['name'].$status.'您的好友申请：'.$item['refuse_reason'];
+                $str = $status.'您的好友申请：'.$item['refuse_reason'];
             }else{
                 $applyUser = $db->find('user',['id'=>$item['user_id']]);
-                $str = $applyUser['name'].'请求添加好友：'.$item['refuse_reason'];
+                $str = '请求添加好友：'.$item['reason'];
             }
             $list['user_name'] = $applyUser['name'];
             $list['user_avatar'] = $applyUser['avatar'];

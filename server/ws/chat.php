@@ -253,6 +253,7 @@ class chat
             $exist['group_id'] = $receive['group_id'];
             $exist['is_read'] = 0;
             $exist['friend_is_read'] = 0;
+            $exist['update_at'] = date('YmdHis');
             $res = $db->update('apply', $exist);
         } else {
             $data = [
@@ -260,6 +261,8 @@ class chat
                 'friend_id' => $receive['friend_id'],
                 'group_id'  => $receive['group_id'],
                 'reason' => $receive['reason'],
+                'create_at' => date('YmdHis'),
+                'update_at' => date('YmdHis'),
             ];
             $res = $db->insert('apply', $data);
         }
