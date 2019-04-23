@@ -266,6 +266,7 @@ class sqli
         $sql = 'SELECT COUNT(1) AS total FROM `' . $table . '` ' . $whereStr . ';';
         $result = $this->link->query($sql);
         $row = $result->fetch_array(MYSQLI_ASSOC);
+        var_dump($row);
         return (int)$row['total'];
     }
 
