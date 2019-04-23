@@ -14,4 +14,9 @@ if(!file_exists($class)){
 include $class;
 $argv[1] = str_replace('/','\\',$argv[1]);
 $className = '\server\\'.$argv[1];
-$app  = new $className();
+if(isset($argv[2])){
+    $app  = new $className($argv[2]);
+}else{
+    $app  = new $className();
+}
+
