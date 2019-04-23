@@ -6,6 +6,7 @@ if(!isset($argv[1])){
 }
 
 define('DS', '/'); // 不支持
+define('ROOT_PATH', __DIR__.'/../');
 $class = __DIR__ .DS.str_replace('\\','/',$argv[1]).'.php';
 if(!file_exists($class)){
     echo $class.' not exist';
@@ -25,7 +26,6 @@ if(isset($argv[2])){
 function loadClass($class){
     $class = str_replace('\\', '/', $class);
     $class = ROOT_PATH . $class . '.php';
-    var_dump($class);
     if (file_exists($class)) {
         include $class;
     } else {
