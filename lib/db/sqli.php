@@ -198,14 +198,14 @@ class sqli
         $limitStr = $this->limit($page, $limit);
         $fieldStr = $this->field($field);
         try {
-            $countSql = 'SELECT COUNT(1) AS countNum FROM `' . $table .'`'. $whereStr . ' ' . $byOrder;
+            $countSql = 'SELECT COUNT(1) AS countNum FROM `' . $table . '`' . $whereStr . ' ' . $byOrder;
             $result = $this->link->query($countSql);
             $res = $result->fetch_array(MYSQLI_ASSOC);
             $count = (int)$res['countNum'];
             $result->close();
             $rows = [];
             if ($count > 0) {
-                $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table .'`'. $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
+                $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table . '`' . $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
                 $result = $this->link->query($sql);
                 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     $rows[] = $row;
@@ -218,19 +218,20 @@ class sqli
         }
     }
 
-    public function join($joins , $where = null, $order = null, $page = 0, $limit = 0, &$count = 0, $field = null){
+    public function join($joins, $where = null, $order = null, $page = 0, $limit = 0, &$count = 0, $field = null)
+    {
         $tableStr = '';
         $i = 0;
-        foreach ($joins as $table=>$join){
-            if(isset($join['as'])){
-                $asStr = ' AS '.$join['as'];
-            }else{
+        foreach ($joins as $table => $join) {
+            if (isset($join['as'])) {
+                $asStr = ' AS ' . $join['as'];
+            } else {
                 $asStr = '';
             }
-            if($i >0){
-                $tableStr .= ' '.strtoupper($join['join']).' JOIN `'.$table = $this->trueTable($table) .$asStr . ' ON ('.$join['on'].') ';
+            if ($i > 0) {
+                $tableStr .= ' ' . strtoupper($join['join']) . ' JOIN `' . $table = $this->trueTable($table) . '`' . $asStr . ' ON (' . $join['on'] . ') ';
             } else {
-                $tableStr .= ' '.$table = $this->trueTable($table).$asStr;
+                $tableStr .= ' `' . $table = $this->trueTable($table) . '`' . $asStr;
             }
             $i++;
         }
@@ -240,7 +241,7 @@ class sqli
         $limitStr = $this->limit($page, $limit);
         $fieldStr = $this->field($field);
         try {
-            $countSql = 'SELECT COUNT(1) AS countNum FROM ' . $tableStr .' '. $whereStr . ' ' . $byOrder;
+            $countSql = 'SELECT COUNT(1) AS countNum FROM ' . $tableStr . ' ' . $whereStr . ' ' . $byOrder;
             var_dump($countSql);
             $result = $this->link->query($countSql);
             $res = $result->fetch_array(MYSQLI_ASSOC);
@@ -248,7 +249,7 @@ class sqli
             $result->close();
             $rows = [];
             if ($count > 0) {
-                $sql = 'SELECT ' . $fieldStr . ' FROM ' . $tableStr .' '. $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
+                $sql = 'SELECT ' . $fieldStr . ' FROM ' . $tableStr . ' ' . $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
                 var_dump($sql);
                 $result = $this->link->query($sql);
                 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -284,7 +285,7 @@ class sqli
         $havingStr = empty($havingStr) ? '' : ' HAVING ' . $havingStr;
         try {
             $rows = [];
-            $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table.'`' . $whereStr . ' ' . $groupStr . ' ' . $havingStr . ' ' . $byOrder . ';';
+            $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table . '`' . $whereStr . ' ' . $groupStr . ' ' . $havingStr . ' ' . $byOrder . ';';
             $result = $this->link->query($sql);
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 $rows[] = $row;
@@ -347,7 +348,7 @@ class sqli
         $byOrder = $this->byOrder($order);
         $fieldStr = $this->field($field);
         try {
-            $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table .'`'. $whereStr . ' ' . $byOrder . ' LIMIT 1;';
+            $sql = 'SELECT ' . $fieldStr . ' FROM `' . $table . '`' . $whereStr . ' ' . $byOrder . ' LIMIT 1;';
             $result = $this->link->query($sql);
             $row = $result->fetch_array(MYSQLI_ASSOC);
             $result->close();
@@ -411,7 +412,7 @@ class sqli
         if ($limit == 0) {
             return '';
         }
-        $begin = (int)($page-1) * $limit;
+        $begin = (int)($page - 1) * $limit;
         $str = ' LIMIT ' . $begin . ',' . $limit . ' ';
         return $str;
     }
