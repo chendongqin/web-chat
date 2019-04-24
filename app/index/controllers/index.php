@@ -47,7 +47,11 @@ class index extends userBase
             $where['on_line']= 0;
             $off_lines = $db->join($joins,$where,'u.name asc');
             $friends[$group['id']]['on_lines'] = $on_lines;
+            $on_line_num = count($on_lines);
+            $friends[$group['id']]['on_lines_num'] = $on_line_num;
+            $friends[$group['id']]['total_num'] = $on_line_num + count($off_lines);
             $friends[$group['id']]['off_lines'] = $off_lines;
+
         }
         $this->assign('groups', $groups);
         $this->assign('friends', $friends);

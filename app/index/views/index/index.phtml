@@ -61,11 +61,11 @@
                         <h3>好友列表</h3>
                         <ul class="nav side-menu">
                             <?php foreach ($groups as $value):?>
-                                <li><a><i class="fa fa-user group-list" data-id=<?php echo $value['id']?>></i> <?php echo $value['name'];?> <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-user group-list" data-id=<?php echo $value['id']?>></i> <?php echo $value['name'];?> （<span class="group-online-<?php echo $value['id']?>"><?php echo $friends[$value['id']]['on_lines_num']?></span>/<span class="group-total-<?php echo $value['id']?>"><?php echo $friends[$value['id']]['on_total_num']?></span>）<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu friend-group-<?php echo $value['id']?>">
                                         <?php if(!empty($friends[$value['id']]['on_lines'])):?>
                                             <?php foreach ($friends[$value['id']]['on_lines'] as $id=>$friend) :?>
-                                                <li class="user-profile">
+                                                <li class="user-profile group-friend-<?php echo $friend['friend_user_id']?>">
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
                                                         <span title="<?php echo $friend['name'];?>"><?php echo $friend['remark']?></span>
@@ -76,7 +76,7 @@
                                         <?php endif;?>
                                         <?php if(!empty($friends[$value['id']]['off_lines'])):?>
                                             <?php foreach ($friends[$value['id']]['off_lines'] as $id=>$friend) :?>
-                                                <li class="user-profile">
+                                                <li class="user-profile group-friend-<?php echo $friend['friend_user_id']?>">
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
                                                         <span title="<?php echo $friend['name'];?>"><?php echo $friend['remark']?></span>
