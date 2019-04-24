@@ -69,6 +69,18 @@
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
                                                         <span title="<?php echo $friend['name'];?>"><?php echo $friend['remark']?></span>
+                                                        <span>（在线）</span>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach;?>
+                                        <?php endif;?>
+                                        <?php if(empty($firends[$value['id']]['off_line'])):?>
+                                            <?php foreach ($firends[$value['id']]['off_line'] as $id=>$friend) :?>
+                                                <li>
+                                                    <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
+                                                        <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
+                                                        <span title="<?php echo $friend['name'];?>"><?php echo $friend['remark']?></span>
+                                                        <span>（离线）</span>
                                                     </a>
                                                 </li>
                                             <?php endforeach;?>
