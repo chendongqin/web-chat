@@ -69,8 +69,6 @@ class chat
     {
         $this->server->on('open', function (\swoole_websocket_server $server, \swoole_http_request $request) {
             $user_id = $request->get['user_id'];
-//            $session = new session();
-//            $user_id = $session::get('login_user');
             $res = $this->createUser($request->fd,$user_id);
             $fds = $this->getFds(self::SELFMSG,$request->fd);
             if ($res) {

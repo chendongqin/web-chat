@@ -55,7 +55,7 @@ class  user extends userApi
         foreach ($result as $item) {
             $item['reason'] = empty($item['reason']) ? '' : '：' . $item['reason'];
             $applyUser = $db->find('user', ['id' => $item['user_id']]);
-            if ($item['reply'] > 0) {
+            if ($item['is_reply'] > 0) {
                 $status = $item['status'] == 1 ? '通过了' : '拒绝了';
                 $str = $status . '您的好友申请' . $item['reason'];
             } else {
