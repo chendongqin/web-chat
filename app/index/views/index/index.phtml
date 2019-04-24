@@ -283,7 +283,7 @@
     }
 
     function get_apply_lists() {
-        var limit = $(".user-apply-num").val();
+        var limit = $(".user-apply-num").html();
         $(".user-apply-list").empty();
         $.get('/api/user/applylist?limit='+limit,function (returnjson) {
             var html = '';
