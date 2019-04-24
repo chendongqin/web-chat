@@ -218,6 +218,48 @@ class sqli
         }
     }
 
+    public function join($joins , $where = null, $order = null, $page = 0, $limit = 0, &$count = 0, $field = null){
+        $tableStr = '';
+        $i = 0;
+        foreach ($joins as $table=>$join){
+            if(isset($join['as'])){
+                $tableStr .= ' `'.$table = $this->trueTable($table).'` AS '.$join['as'];
+            }else{
+                $tableStr .= ' `'.$table = $this->trueTable($table);
+            }
+            if($i >0){
+                $tableStr .= ' ON ('.$join['on'].') ';
+            }
+            $i++;
+        }
+        $whereStr = $this->where($where);
+        $whereStr = empty($whereStr) ? '' : ' WHERE ' . $whereStr;
+        $byOrder = $this->byOrder($order);
+        $limitStr = $this->limit($page, $limit);
+        $fieldStr = $this->field($field);
+        try {
+            $countSql = 'SELECT COUNT(1) AS countNum FROM ' . $tableStr .' '. $whereStr . ' ' . $byOrder;
+            var_dump($countSql);
+            $result = $this->link->query($countSql);
+            $res = $result->fetch_array(MYSQLI_ASSOC);
+            $count = (int)$res['countNum'];
+            $result->close();
+            $rows = [];
+            if ($count > 0) {
+                $sql = 'SELECT ' . $fieldStr . ' FROM ' . $tableStr .' '. $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
+                var_dump($sql);
+                $result = $this->link->query($sql);
+                while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                    $rows[] = $row;
+                }
+                $result->close();
+            }
+            return $rows;
+        } catch (\Error $error) {
+            throw new \Error('sql错误', 500);
+        }
+    }
+
     /**
      * 分组查询
      * @param $table

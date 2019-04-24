@@ -33,7 +33,19 @@ class index extends userBase
         //验证通知
         $where = ['receive_user_id'=>$user['id'],'is_read'=>0];
         $applyNum = $db->count('apply',$where);
-
+        //好友分组
+        $where = ['friend_user_id'=>$user['id']];
+        foreach ($groups as $group){
+            $where['group_id']= $group['id'];
+            $where['on_line']= 1;
+            $joins = [
+                'friends'=>[],
+                'user'=>['on'=>'friends.friend_user_id = user.id'],
+            ];
+            $data = $db->join($joins,$where,'user.name asc');
+            var_dump($data);
+            die();
+        }
         $this->assign('groups', $groups);
         $this->assign('use_set',$this->set);
         $this->assign('applyNum',$applyNum);
