@@ -261,6 +261,10 @@
             }
         });
 
+        $(".info-number").click(function () {
+            $(".user-apply-num").attr('style','display:none;');
+        });
+
         $("#add-friends-deal-button").click(function () {
            var id = $("#add-friend-deal-id").val();
            var status = $("#add-friend-deal-select").val();

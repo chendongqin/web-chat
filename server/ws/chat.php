@@ -280,7 +280,7 @@ class chat
         $friend_fd = $this->getClient($receive['friend_id']);
         if (!empty($friend_fd)) {
             //验证通知
-            $where = ['receive_user_id' => $receive['friend_id'], 'status' => 1];
+            $where = ['receive_user_id' => $receive['friend_id'],'is_read'=>0];
             $applyNum = $db->count('apply', $where);
             $msg = $this->buildJson(['apply_num' => $applyNum], self::APPLYTYPE);
             $this->intoTask($fd, $msg, [$friend_fd]);
@@ -308,7 +308,7 @@ class chat
         $receive_fd = $this->getClient($apply['user_id']);
         if (!empty($receive_fd)) {
             //验证通知
-            $where = ['receive_user_id' => $apply['user_id'], 'status' => 1];
+            $where = ['receive_user_id' => $apply['user_id'],'is_read'=>0];
             $applyNum = $db->count('apply', $where);
             $msg = $this->buildJson(['apply_num' => $applyNum], self::APPLYTYPE);
             $this->intoTask($fd, $msg, [$receive_fd]);
@@ -341,7 +341,6 @@ class chat
             'group_id'       => $apply['group_id'],
             'create_at'      => date('YmdHis')
         ];
-        $db->insert('friends', $add1);
         $add2 = [
             'user_id'        => $apply['receive_user_id'],
             'friend_user_id' => $apply['user_id'],
@@ -349,6 +348,7 @@ class chat
             'group_id'       => $receive['group_id'],
             'create_at'      => date('YmdHis')
         ];
+        $db->insert('friends', $add1);
         $db->insert('friends', $add2);
         //相互发送与对方是好友消息
         $addChat1 = [
@@ -372,7 +372,7 @@ class chat
         if (!empty($receive_fd)) {
             $receiveUser = $this->table->get($receive_fd);
             //验证通知
-            $where = ['receive_user_id' => $apply['user_id'], 'status' => 1];
+            $where = ['receive_user_id' => $apply['user_id'],'is_read'=>0];
             $applyNum = $db->count('apply', $where);
             $msg = $this->buildJson(['apply_num' => $applyNum], self::APPLYTYPE);
             $this->intoTask($fd, $msg, [$receive_fd]);
@@ -395,10 +395,10 @@ class chat
         }
         //好友列表更新推送
         $msg = $this->buildJson(['group_id' => $receive['group_id'], 'user' => $receiveUser], self::ADDFRIENDYPE);
-        $this->intoTask($fd, $msg, [$receive_fd]);
+        $this->intoTask($receive_fd, $msg, [$fd]);
         //消息推送
         $msg = $this->buildJson(['group_id' => $receive['group_id'],'chat_text'=>$addChat2['chat_text'], 'user' => $receiveUser], self::CHATTYPE);
-        $this->intoTask($fd, $msg, [$receive_fd]);
+        $this->intoTask($receive_fd, $msg, [$fd]);
         return true;
     }
 
