@@ -223,12 +223,14 @@ class sqli
         $i = 0;
         foreach ($joins as $table=>$join){
             if(isset($join['as'])){
-                $tableStr .= ' `'.$table = $this->trueTable($table).'` AS '.$join['as'];
+                $asStr = ' AS '.$join['as'];
             }else{
-                $tableStr .= ' '.strtoupper($join['join']).' JOIN `'.$table = $this->trueTable($table);
+                $asStr = '';
             }
             if($i >0){
-                $tableStr .= ' ON ('.$join['on'].') ';
+                $tableStr .= ' '.strtoupper($join['join']).' JOIN `'.$table = $this->trueTable($table) .$asStr . ' ON ('.$join['on'].') ';
+            } else {
+                $tableStr .= ' '.$table = $this->trueTable($table).$asStr;
             }
             $i++;
         }
