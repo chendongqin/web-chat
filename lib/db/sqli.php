@@ -225,7 +225,7 @@ class sqli
             if(isset($join['as'])){
                 $tableStr .= ' `'.$table = $this->trueTable($table).'` AS '.$join['as'];
             }else{
-                $tableStr .= ' `'.$table = $this->trueTable($table);
+                $tableStr .= ' '.strtoupper($join['join']).' JOIN `'.$table = $this->trueTable($table);
             }
             if($i >0){
                 $tableStr .= ' ON ('.$join['on'].') ';

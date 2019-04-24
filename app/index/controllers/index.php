@@ -40,7 +40,7 @@ class index extends userBase
             $where['on_line']= 1;
             $joins = [
                 'friends'=>[],
-                'user'=>['on'=>'friends.friend_user_id = user.id'],
+                'user'=>['on'=>'friends.friend_user_id = user.id','join'=>'left'],
             ];
             $data = $db->join($joins,$where,'user.name asc');
             var_dump($data);
