@@ -63,8 +63,8 @@
                             <?php foreach ($groups as $value):?>
                                 <li><a><i class="fa fa-user group-list" data-id=<?php echo $value['id']?>></i> <?php echo $value['name'];?> <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu friend-group-<?php echo $value['id']?>">
-                                        <?php if(empty($friends[$value['id']]['on_line'])):?>
-                                            <?php foreach ($friends[$value['id']]['on_line'] as $id=>$friend) :?>
+                                        <?php if(empty($friends[$value['id']]['on_lines'])):?>
+                                            <?php foreach ($friends[$value['id']]['on_lines'] as $id=>$friend) :?>
                                                 <li>
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
@@ -74,8 +74,8 @@
                                                 </li>
                                             <?php endforeach;?>
                                         <?php endif;?>
-                                        <?php if(empty($friends[$value['id']]['off_line'])):?>
-                                            <?php foreach ($friends[$value['id']]['off_line'] as $id=>$friend) :?>
+                                        <?php if(empty($friends[$value['id']]['off_lines'])):?>
+                                            <?php foreach ($friends[$value['id']]['off_lines'] as $id=>$friend) :?>
                                                 <li>
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
