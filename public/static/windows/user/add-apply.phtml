@@ -1,16 +1,24 @@
 <!-- 添加好友弹窗 start -->
-<div class="modal fade" id="modal-add-friends">
+<div class="modal fade" id="modal-deal-add-friends">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">添加好友</h4>
+                <h4 class="modal-title">验证消息</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="box-body">
-                        <input name="friend_id" value="" type="hidden" id="add-friend-user_id">
+                        <input value="" type="hidden" id="add-friend-deal-id">
+                        <div class="form-group" id="add-friend-deal-select">
+                            <div class="col-sm-10">
+                                <select class="form-control" id="add-friend-group_id">
+                                    <option value="0">同意</option>
+                                    <option value="1">拒绝</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group add-friend-deal">
                             <label  class="col-sm-2 control-label">分组：</label>
                             <div class="col-sm-10">
@@ -21,24 +29,23 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group add-friend-deal">
                             <label  class="col-sm-2 control-label">备注：</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="add-friend-remark" placeholder="">
                             </div>
                         </div>
-                        <div class="form-group " >
-                            <label  class="col-sm-2 control-label">理由：</label>
+                        <div class="form-group add-friend-no-deal" style="display: none">
+                            <label  class="col-sm-2 control-label">拒绝理由：</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="add-friend-reason" placeholder="我是.."></textarea>
+                                <textarea class="form-control" id="add-friend-reason" placeholder="..."></textarea>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="add-friends-button">确定</button>
+                <button type="button" class="btn btn-primary" id="add-friends-deal-button">确定</button>
             </div>
         </div>
     </div>

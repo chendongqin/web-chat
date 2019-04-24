@@ -145,6 +145,8 @@
         <?php include PUBLIC_PATH.'static/windows/user/search.phtml'?>
         <?php include PUBLIC_PATH.'static/windows/user/search_users.phtml'?>
         <?php include PUBLIC_PATH.'static/windows/user/addfriens.phtml'?>
+        <?php include PUBLIC_PATH.'static/windows/user/add-apply.phtml'?>
+        <?php include PUBLIC_PATH.'static/windows/user/look_apply.phtml'?>
         <!-- /page content -->
 
         <!-- footer content -->
@@ -237,10 +239,12 @@
             var friend_id = $("#add-friend-user_id").val();
             var group_id = $("#add-friend-group_id").val();
             var reson = $("#add-friend-reason").val();
+            var remark = $("#add-friend-remark").val();
             let msg = {
                 friend_id : friend_id,
                 group_id : group_id,
                 reason : reson,
+                friend_remark : remark,
                 quest_type : 'add_apply'
             };
             ws.send(JSON.stringify(msg));
@@ -299,7 +303,7 @@
             }
             $.each(returnjson.data.lists,function(index,value){
                 html += "<li>\n" +
-                    "    <a>\n" +
+                    "    <a onclick='apply_look("+value.id+","+value.is_apply+")'>\n" +
                     "        <span class=\"image\"><img src=\""+ value.user_avatar +"\" alt=\"Profile Image\" /></span>\n" +
                     "        <span>\n" +
                     "                          <span>"+value.user_name+"</span>\n" +
@@ -373,6 +377,21 @@
         $('#modal-search-friends-result').modal('hide');
         $("#add-friend-user_id").val(friend_id);
         $("#modal-add-friends").modal('show');
+    }
+
+    function apply_look(id , is_replay){
+        $.post('/api/user/look_apply?id='+id,function (returnJson) {
+            if(returnJson.status == false){
+                alert(returnJson.msg);
+            }
+            $(".apply-look-text").html(returnJson.data.msg);
+        });
+        if(is_replay>0){
+            $("#modal-look-text").modal('show');
+        }else {
+            $("#add-friend-deal-id").val(id);
+            $("#modal-deal-add-friends").model('show');
+        }
     }
 
     function more_apply_lists() {

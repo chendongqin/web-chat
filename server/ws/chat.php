@@ -9,6 +9,7 @@
 namespace server\ws;
 use lib\db\sqli;
 use lib\ku\redis;
+use lib\ku\session;
 class chat
 {
     //消息类型
@@ -67,10 +68,13 @@ class chat
     public function open()
     {
         $this->server->on('open', function (\swoole_websocket_server $server, \swoole_http_request $request) {
-            $res = $this->createUser($request->fd,$request->get['user_id']);
+//            $user_id = $request->get['user_id'];
+            $session = new session();
+            $user_id = $session::get('login_user');
+            $res = $this->createUser($request->fd,$user_id);
             $fds = $this->getFds(self::SELFMSG,$request->fd);
             if ($res) {
-                $data = $this->buildJson(['msg'=>'登陆成功'],self::CLIENTYPE);
+                $data = $this->buildJson(['msg'=>'登陆成功:'.$user_id],self::CLIENTYPE);
             } else {
                 $data = $this->buildJson(['msg'=>'连接失败'],self::ERRORTYPE);
             }
@@ -242,25 +246,26 @@ class chat
         if (empty($friend)) {
             return $this->errorMsg($fd,'没有该用户信息');
         }
-        $userFriend = $db->find('friends', ['user_id' => $user_id, 'friend_id' => $receive['friend_id']], 'id desc');
+        $userFriend = $db->find('friends', ['user_id' => $user_id, 'friend_user_id' => $receive['friend_id']], 'id desc');
         if (!empty($userFriend)) {
             return $this->errorMsg($fd,$friend['name'] . ' 已经是您的好友');
         }
-        $exist = $db->find('apply', ['user_id' => $user_id, 'friend_id' => $receive['friend_id']], 'id desc');
+        $exist = $db->find('apply', ['user_id' => $user_id, 'receive_user_id' => $receive['friend_id']], 'id desc');
         if (!empty($exist)) {
-            $exist['status'] = 0;
+            $exist['status'] = 1;
             $exist['reason'] = $receive['reason'];
+            $exist['friend_remark'] = $receive['friend_remark'];
             $exist['group_id'] = $receive['group_id'];
             $exist['is_read'] = 0;
-            $exist['friend_is_read'] = 0;
             $exist['update_at'] = date('YmdHis');
             $res = $db->update('apply', $exist);
         } else {
             $data = [
                 'user_id'   => $user_id,
-                'friend_id' => $receive['friend_id'],
+                'receive_user_id' => $receive['friend_id'],
                 'group_id'  => $receive['group_id'],
                 'reason' => $receive['reason'],
+                'friend_remark' => $receive['friend_remark'],
                 'create_at' => date('YmdHis'),
                 'update_at' => date('YmdHis'),
             ];
@@ -272,7 +277,7 @@ class chat
         $friend_fd = $this->getClient($receive['friend_id']);
         if(!empty($friend_fd)){
             //验证通知
-            $where = ['user_id'=>$receive['friend_id'],'status>0' ,'OR:'=>['friend_id'=>$receive['friend_id'],'status'=>0]];
+            $where = ['receive_user_id'=>$receive['friend_id'],'status'=>1];
             $applyNum = $db->count('apply',$where);
             $msg = $this->buildJson(['apply_num'=>$applyNum],self::APPLYTYPE);
             $this->intoTask($fd,$msg,[$friend_fd]);
