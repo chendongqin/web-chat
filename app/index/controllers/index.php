@@ -35,6 +35,7 @@ class index extends userBase
         $applyNum = $db->count('apply',$where);
         //好友分组
         $where = ['user_id'=>$user['id']];
+        $friends = [];
         foreach ($groups as $group){
             $where['group_id']= $group['id'];
             $where['on_line']= 1;
@@ -42,11 +43,14 @@ class index extends userBase
                 'friends'=>['as'=>'f'],
                 'user'=>['as'=>'u','on'=>'f.friend_user_id = u.id','join'=>'left'],
             ];
-            $data = $db->join($joins,$where,'u.name asc');
-            var_dump($data);
-            die();
+            $on_lines = $db->join($joins,$where,'u.name asc');
+            $where['on_line']= 0;
+            $off_lines = $db->join($joins,$where,'u.name asc');
+            $friends[$group['id']]['on_lines'] = $on_lines;
+            $friends[$group['id']]['off_lines'] = $off_lines;
         }
         $this->assign('groups', $groups);
+        $this->assign('friends', $friends);
         $this->assign('use_set',$this->set);
         $this->assign('applyNum',$applyNum);
         return $this->display();
