@@ -65,7 +65,7 @@
                                     <ul class="nav child_menu friend-group-<?php echo $value['id']?>">
                                         <?php if(!empty($friends[$value['id']]['on_lines'])):?>
                                             <?php foreach ($friends[$value['id']]['on_lines'] as $id=>$friend) :?>
-                                                <li>
+                                                <li class="user-profile">
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
                                                         <span title="<?php echo $friend['name'];?>"><?php echo $friend['remark']?></span>
@@ -76,7 +76,7 @@
                                         <?php endif;?>
                                         <?php if(!empty($friends[$value['id']]['off_lines'])):?>
                                             <?php foreach ($friends[$value['id']]['off_lines'] as $id=>$friend) :?>
-                                                <li>
+                                                <li class="user-profile">
                                                     <a class="chat-friend" data-friend-id="<?php echo $friend['friend_user_id']?>">
                                                         <span class="image"><img src="<?php echo $friend['avatar']?>"></span>
                                                         <span title="<?php echo $friend['name'];?>"><?php echo $friend['remark']?></span>
@@ -370,7 +370,7 @@
             $.each(returnjson.data.lists,function(index,value){
                 html += "<li>\n" +
                     "    <a onclick='apply_look("+value.id+","+ value.is_reply +")'>\n" +
-                    "        <span class=\"image\"><img src=\""+ value.user_avatar +"\" alt=\"Profile Image\" /></span>\n" +
+                    "        <span class=\"image\"><img src=\""+ value.user_avatar +"\" alt=\"" + value.user_name + "\" /></span>\n" +
                     "        <span>\n" +
                     "                          <span>"+value.user_name+"</span>\n" +
                     "                          <span class=\"time\">"+value.update_at+"</span>\n" +
