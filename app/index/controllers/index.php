@@ -34,7 +34,7 @@ class index extends userBase
         $where = ['receive_user_id'=>$user['id'],'is_read'=>0];
         $applyNum = $db->count('apply',$where);
         //好友分组
-        $where = ['friend_user_id'=>$user['id']];
+        $where = ['user_id'=>$user['id']];
         foreach ($groups as $group){
             $where['group_id']= $group['id'];
             $where['on_line']= 1;
@@ -42,7 +42,7 @@ class index extends userBase
                 'friends'=>['as'=>'f'],
                 'user'=>['as'=>'u','on'=>'f.friend_user_id = u.id','join'=>'left'],
             ];
-            $data = $db->join($joins,$where,'user.name asc');
+            $data = $db->join($joins,$where,'u.name asc');
             var_dump($data);
             die();
         }
