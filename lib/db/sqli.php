@@ -259,7 +259,7 @@ class sqli
             }
             return $rows;
         } catch (\Error $error) {
-            throw new \Error('sql错误', 500);
+            throw new \Error('sql错误:'.$countSql, 500);
         }
     }
 
