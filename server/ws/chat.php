@@ -305,7 +305,7 @@ class chat
             'is_reply'        => $receive['apply_id'],
         ];
         $db->insert('apply', $data);
-        $receive_fd = $this->getClient($receive['friend_id']);
+        $receive_fd = $this->getClient($apply['user_id']);
         if (!empty($receive_fd)) {
             //验证通知
             $where = ['receive_user_id' => $apply['user_id'], 'status' => 1];
@@ -367,7 +367,7 @@ class chat
         ];
         $db->insert('chat_list', $addChat1);
         $db->insert('chat_list', $addChat2);
-        $receive_fd = $this->getClient($receive['friend_id']);
+        $receive_fd = $this->getClient($apply['user_id']);
         $user = $this->table->get($fd);
         if (!empty($receive_fd)) {
             $receiveUser = $this->table->get($receive_fd);

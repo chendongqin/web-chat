@@ -344,7 +344,7 @@
             }
             $.each(returnjson.data.lists,function(index,value){
                 html += "<li>\n" +
-                    "    <a onclick='apply_look("+value.id+","+value.is_apply+")'>\n" +
+                    "    <a onclick='apply_look("+value.id+","+ value.is_reply +")'>\n" +
                     "        <span class=\"image\"><img src=\""+ value.user_avatar +"\" alt=\"Profile Image\" /></span>\n" +
                     "        <span>\n" +
                     "                          <span>"+value.user_name+"</span>\n" +
