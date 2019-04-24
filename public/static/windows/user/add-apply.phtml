@@ -11,18 +11,18 @@
                 <form class="form-horizontal">
                     <div class="box-body">
                         <input value="" type="hidden" id="add-friend-deal-id">
-                        <div class="form-group" id="add-friend-deal-select">
-                            <div class="col-sm-10">
-                                <select class="form-control" id="add-friend-group_id">
-                                    <option value="0">同意</option>
-                                    <option value="1">拒绝</option>
+                        <div class="form-group">
+                            <div class="col-sm-3 form-control">
+                                <select class="form-control" id="add-friend-deal-select">
+                                    <option value="1">同意</option>
+                                    <option value="0">拒绝</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group add-friend-deal">
                             <label  class="col-sm-2 control-label">分组：</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="add-friend-group_id">
+                                <select class="form-control" id="add-deal-group_id">
                                     <?php foreach ($groups as $key=>$data):?>
                                         <option value="<?php echo $data['id'] ;?>"><?php echo $data['name'];?></option>
                                     <?php endforeach;?>
@@ -32,13 +32,13 @@
                         <div class="form-group add-friend-deal">
                             <label  class="col-sm-2 control-label">备注：</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="add-friend-remark" placeholder="">
+                                <input type="text" class="form-control" id="add-deal-remark" placeholder="">
                             </div>
                         </div>
                         <div class="form-group add-friend-no-deal" style="display: none">
                             <label  class="col-sm-2 control-label">拒绝理由：</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="add-friend-reason" placeholder="..."></textarea>
+                                <textarea class="form-control" id="add-deal-reason" placeholder="..."></textarea>
                             </div>
                         </div>
                     </div>

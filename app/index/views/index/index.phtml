@@ -250,6 +250,41 @@
             ws.send(JSON.stringify(msg));
             $("#modal-add-friends").modal('hide');
         });
+        $("#add-friend-deal-select").change(function () {
+            var deal = $(this).val();
+            if(deal == 0){
+                $(".add-friend-deal").attr('style','display:none;');
+                $(".add-friend-no-deal").attr('style','display:block;');
+            }else{
+                $(".add-friend-deal").attr('style','display:block;');
+                $(".add-friend-no-deal").attr('style','display:none;');
+            }
+        });
+
+        $("#add-friends-deal-button").click(function () {
+           var id = $("#add-friend-deal-id").val();
+           var status = $("#add-friend-deal-select").val();
+           if(status == 0){
+               var reason = $("#add-deal-reason").val();
+               let msg = {
+                   apply_id : id,
+                   reason : reason,
+                   quest_type : 'apply_refuse'
+               };
+               ws.send(JSON.stringify(msg));
+           }else {
+               var group_id = $("#add-deal-group_id").val();
+               var remark = $("#add-deal-remark").val();
+               let msg = {
+                   apply_id : id,
+                   group_id : group_id,
+                   friend_remark : remark,
+                   quest_type : 'apply_deal'
+               };
+               ws.send(JSON.stringify(msg));
+           }
+            $("#modal-deal-add-friends").modal('hide');
+        });
 
     })();
 
@@ -270,6 +305,12 @@
                     $(".user-apply-num").html(data.data.apply_num);
                     $(".user-apply-num").attr('style','display: block;');
                     get_apply_lists();
+                    break;
+                case 'add_friend':
+                    console.log(data.data);
+                    break;
+                case 'chat':
+                    console.log(data.data);
                     break;
             }
         };
