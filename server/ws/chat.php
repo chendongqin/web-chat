@@ -356,6 +356,7 @@ class chat
             'related_user_id' => $apply['receive_user_id'],
             'chat_text'       => '我们已经是好友...',
             'create_at'       => time(),
+            'group_id'       => $apply['group_id'],
             'is_receive'      => 1,
         ];
         $addChat2 = [
@@ -363,6 +364,7 @@ class chat
             'related_user_id' => $apply['user_id'],
             'chat_text'       => '我们已经是好友...',
             'create_at'       => time(),
+            'group_id'       => $receive['group_id'],
             'is_receive'      => 1,
         ];
         $db->insert('chat_list', $addChat1);

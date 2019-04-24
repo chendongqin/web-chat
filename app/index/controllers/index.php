@@ -36,6 +36,7 @@ class index extends userBase
         //好友分组
         $where = ['user_id'=>$user['id']];
         $friends = [];
+        $text_nums = [];
         foreach ($groups as $group){
             $where['group_id']= $group['id'];
             $where['on_line']= 1;
@@ -51,10 +52,12 @@ class index extends userBase
             $friends[$group['id']]['on_lines_num'] = $on_line_num;
             $friends[$group['id']]['total_num'] = $on_line_num + count($off_lines);
             $friends[$group['id']]['off_lines'] = $off_lines;
-
+            $text_num = $db->count('chat_list',['user_id'=>$user['id'],'group_id'=>$group['id'],'is_read'=>0,'is_receive'=>1]);
+            $text_nums[$group['id']] = $text_num;
         }
         $this->assign('groups', $groups);
         $this->assign('friends', $friends);
+        $this->assign('text_nums', $text_nums);
         $this->assign('use_set',$this->set);
         $this->assign('applyNum',$applyNum);
         return $this->display();
