@@ -39,8 +39,8 @@ class index extends userBase
             $where['group_id']= $group['id'];
             $where['on_line']= 1;
             $joins = [
-                'friends'=>[],
-                'user'=>['on'=>'friends.friend_user_id = user.id','join'=>'left'],
+                'friends'=>['as'=>'f'],
+                'user'=>['as'=>'u','on'=>'f.friend_user_id = u.id','join'=>'left'],
             ];
             $data = $db->join($joins,$where,'user.name asc');
             var_dump($data);

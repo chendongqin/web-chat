@@ -242,7 +242,6 @@ class sqli
         $fieldStr = $this->field($field);
         try {
             $countSql = 'SELECT COUNT(1) AS countNum FROM ' . $tableStr . ' ' . $whereStr . ' ' . $byOrder;
-            var_dump($countSql);
             $result = $this->link->query($countSql);
             $res = $result->fetch_array(MYSQLI_ASSOC);
             $count = (int)$res['countNum'];
@@ -250,7 +249,6 @@ class sqli
             $rows = [];
             if ($count > 0) {
                 $sql = 'SELECT ' . $fieldStr . ' FROM ' . $tableStr . ' ' . $whereStr . ' ' . $byOrder . ' ' . $limitStr . ';';
-                var_dump($sql);
                 $result = $this->link->query($sql);
                 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     $rows[] = $row;
