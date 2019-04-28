@@ -64,6 +64,8 @@ class index extends userBase
     }
 
     public function test(){
+        $user = $this->getLoginUser();
+        $this->assign('user_id',$user['id']);
         return $this->display();
     }
 }
