@@ -72,7 +72,7 @@ class start
     public static function loadClass($class)
     {
         $class = str_replace('\\', '/', $class);
-        $class = ROOT_PATH . $class . '.php';
+        $class = ROOT_PATH . $class . '.php';var_dump($class);
         if (file_exists($class)) {
             include $class;
         } else {
