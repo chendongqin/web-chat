@@ -6,7 +6,7 @@
     let user_id = $("#login_user_id").val();
     let ws = new WebSocket("ws://swoole.cddong.top:8700?user_id=" + user_id);//连接服务器
     (function () {
-
+        link();
     })();
     function link () {
         ws.onopen = function(event){
