@@ -57,9 +57,10 @@ class test
                 'client_type' => $type,
             ]);
             $this->setClient($type, $user_id, $request->fd);
-            $this->timer_tick($type,$user_id);
+            $id = $this->timer_tick($type,$user_id);
+            echo $id;
             $data = $this->buildJson(['msg' => '登陆成功:' . $user_id]);
-            $this->intoTask($request->fd, $data, $request->fd);
+            $this->intoTask($request->fd, $data, [$request->fd]);
         });
     }
 
