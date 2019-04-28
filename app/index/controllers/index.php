@@ -62,4 +62,8 @@ class index extends userBase
         $this->assign('applyNum',$applyNum);
         return $this->display();
     }
+
+    public function test(){
+        return $this->display();
+    }
 }

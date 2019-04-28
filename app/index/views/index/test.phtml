@@ -1,0 +1,28 @@
+<?php echo 123;?>
+
+
+<script>
+    let user_id = $("#login_user_id").val();
+    let ws = new WebSocket("ws://swoole.cddong.top:8700?user_id=" + user_id);//连接服务器
+    (function () {
+
+    })();
+    function link () {
+        ws.onopen = function(event){
+            console.log('连接成功！');
+        };
+        ws.onmessage = function (event) {
+            console.log(event);
+            var data = JSON.parse(event.data);
+            console.log(data.data);
+        };
+        ws.onclose = function(event){
+            alert("服务器错误！");
+        };
+
+        ws.onerror = function(event){
+            alert("WebSocket异常！");
+        };
+    }
+
+</script>
