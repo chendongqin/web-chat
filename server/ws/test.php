@@ -113,7 +113,7 @@ class test
     public function timer_tick($type ,$user_id)
     {
         $db = $this->getDb();
-        $timerId = \swoole_timer_tick(5000,function () use ($type , $user_id ,$db){
+        $timerId = $this->server->tick(5000,function () use ($type , $user_id ,$db){
             $data = [];
             switch ($type){
                 case 'chat':

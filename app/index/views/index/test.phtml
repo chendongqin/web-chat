@@ -4,7 +4,7 @@
 <script src="/static/vendors/jquery/dist/jquery.min.js"></script>
 <script>
     let user_id = $("#login_user_id").val();
-    let ws = new WebSocket("ws://swoole.cddong.top:8700?user_id=" + user_id);//连接服务器
+    let ws = new WebSocket("ws://swoole.cddong.top:8700?user_id=" + user_id +'&client_type=chat');//连接服务器
     (function () {
         link();
     })();
